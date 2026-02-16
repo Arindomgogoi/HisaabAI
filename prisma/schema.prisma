@@ -1,0 +1,265 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Auth Models ─────────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  password      String
+  image         String?
+  role          Role      @default(OWNER)
+  shopId        String?
+  shop          Shop?     @relation(fields: [shopId], references: [id])
+  accounts      Account[]
+  sessions      Session[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// ─── Business Models ─────────────────────────────────────
+
+model Shop {
+  id             String          @id @default(cuid())
+  name           String
+  ownerName      String?
+  licenseNumber  String?
+  address        String?
+  city           String?
+  state          String          @default("Maharashtra")
+  phone          String?
+  gstNumber      String?
+  users          User[]
+  products       Product[]
+  sales          Sale[]
+  purchases      Purchase[]
+  suppliers      Supplier[]
+  customers      Customer[]
+  stockTransfers StockTransfer[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@map("shops")
+}
+
+enum Role {
+  OWNER
+  MANAGER
+  STAFF
+}
+
+enum ProductCategory {
+  WHISKY
+  RUM
+  VODKA
+  GIN
+  BRANDY
+  WINE
+  BEER
+}
+
+enum SizeUnit {
+  ML_750
+  ML_375
+  ML_180
+  CAN_500
+  BOTTLE_650
+}
+
+model Product {
+  id               String          @id @default(cuid())
+  name             String
+  brand            String
+  category         ProductCategory
+  size             SizeUnit
+  hsnCode          String          @default("2208")
+  mrp              Decimal         @db.Decimal(10, 2)
+  costPrice        Decimal         @db.Decimal(10, 2)
+  bpc              Int
+  warehouseCases   Int             @default(0)
+  warehouseBottles Int             @default(0)
+  shopBottles      Int             @default(0)
+  reorderLevel     Int             @default(10)
+  isActive         Boolean         @default(true)
+  shopId           String
+  shop             Shop            @relation(fields: [shopId], references: [id])
+  saleItems        SaleItem[]
+  purchaseItems    PurchaseItem[]
+  stockTransfers   StockTransfer[]
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  @@unique([shopId, name, size])
+  @@index([shopId, category])
+  @@index([shopId, isActive])
+  @@map("products")
+}
+
+enum PaymentMode {
+  CASH
+  UPI
+  CREDIT
+}
+
+model Sale {
+  id            String      @id @default(cuid())
+  invoiceNumber String      @unique
+  saleDate      DateTime    @default(now())
+  subtotal      Decimal     @db.Decimal(10, 2)
+  discount      Decimal     @db.Decimal(10, 2) @default(0)
+  totalAmount   Decimal     @db.Decimal(10, 2)
+  paymentMode   PaymentMode
+  customerId    String?
+  customer      Customer?   @relation(fields: [customerId], references: [id])
+  shopId        String
+  shop          Shop        @relation(fields: [shopId], references: [id])
+  items         SaleItem[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([shopId, saleDate])
+  @@index([shopId, paymentMode])
+  @@map("sales")
+}
+
+model SaleItem {
+  id         String  @id @default(cuid())
+  saleId     String
+  sale       Sale    @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  productId  String
+  product    Product @relation(fields: [productId], references: [id])
+  quantity   Int
+  unitPrice  Decimal @db.Decimal(10, 2)
+  totalPrice Decimal @db.Decimal(10, 2)
+
+  @@map("sale_items")
+}
+
+model Supplier {
+  id          String     @id @default(cuid())
+  name        String
+  contactName String?
+  phone       String?
+  email       String?
+  address     String?
+  gstNumber   String?
+  shopId      String
+  shop        Shop       @relation(fields: [shopId], references: [id])
+  purchases   Purchase[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@map("suppliers")
+}
+
+model Purchase {
+  id            String         @id @default(cuid())
+  invoiceNumber String
+  purchaseDate  DateTime       @default(now())
+  totalAmount   Decimal        @db.Decimal(10, 2)
+  paymentStatus String         @default("pending")
+  supplierId    String
+  supplier      Supplier       @relation(fields: [supplierId], references: [id])
+  shopId        String
+  shop          Shop           @relation(fields: [shopId], references: [id])
+  items         PurchaseItem[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@index([shopId, purchaseDate])
+  @@map("purchases")
+}
+
+model PurchaseItem {
+  id          String   @id @default(cuid())
+  purchaseId  String
+  purchase    Purchase @relation(fields: [purchaseId], references: [id], onDelete: Cascade)
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id])
+  cases       Int
+  costPerCase Decimal  @db.Decimal(10, 2)
+  totalCost   Decimal  @db.Decimal(10, 2)
+
+  @@map("purchase_items")
+}
+
+model Customer {
+  id            String   @id @default(cuid())
+  name          String
+  phone         String?
+  address       String?
+  creditLimit   Decimal  @db.Decimal(10, 2) @default(5000)
+  creditBalance Decimal  @db.Decimal(10, 2) @default(0)
+  shopId        String
+  shop          Shop     @relation(fields: [shopId], references: [id])
+  sales         Sale[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([shopId])
+  @@map("customers")
+}
+
+model StockTransfer {
+  id               String   @id @default(cuid())
+  productId        String
+  product          Product  @relation(fields: [productId], references: [id])
+  casesTransferred Int
+  bottlesGenerated Int
+  shopId           String
+  shop             Shop     @relation(fields: [shopId], references: [id])
+  transferDate     DateTime @default(now())
+  notes            String?
+  createdAt        DateTime @default(now())
+
+  @@index([shopId, transferDate])
+  @@map("stock_transfers")
+}
