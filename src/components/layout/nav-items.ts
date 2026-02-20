@@ -31,8 +31,6 @@ export const navItems = [
     label: "AI Insights",
     href: "/insights",
     icon: Brain,
-    disabled: true,
-    badge: "Soon",
   },
   {
     label: "Reports",
