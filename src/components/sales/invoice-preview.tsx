@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -38,6 +40,14 @@ interface InvoiceData {
 }
 
 export function InvoicePreview({ sale }: { sale: InvoiceData }) {
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    if (searchParams.get("print") === "1") {
+      const t = setTimeout(() => window.print(), 500);
+      return () => clearTimeout(t);
+    }
+  }, [searchParams]);
+
   return (
     <div className="max-w-2xl mx-auto space-y-4">
       <div className="flex items-center justify-between print:hidden">

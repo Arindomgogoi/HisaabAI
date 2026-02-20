@@ -81,6 +81,18 @@ export const purchaseSchema = z.object({
   items: z.array(purchaseItemSchema).min(1, "At least one item required"),
 });
 
+export const shopSchema = z.object({
+  name: z.string().min(1, "Shop name is required"),
+  ownerName: z.string().optional(),
+  phone: z.string().optional(),
+  address: z.string().optional(),
+  city: z.string().optional(),
+  state: z.string().optional(),
+  licenseNumber: z.string().optional(),
+  gstNumber: z.string().optional(),
+});
+
+export type ShopFormValues = z.infer<typeof shopSchema>;
 export type SupplierFormValues = z.infer<typeof supplierSchema>;
 export type PurchaseFormValues = z.infer<typeof purchaseSchema>;
 export type ProductFormValues = z.infer<typeof productSchema>;

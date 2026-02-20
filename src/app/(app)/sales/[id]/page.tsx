@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { auth } from "@/lib/auth";
 import { redirect, notFound } from "next/navigation";
 import { getSaleDetail } from "@/lib/data/sales";
@@ -17,5 +18,9 @@ export default async function InvoicePage({ params }: Props) {
 
   if (!sale) notFound();
 
-  return <InvoicePreview sale={sale} />;
+  return (
+    <Suspense>
+      <InvoicePreview sale={sale} />
+    </Suspense>
+  );
 }

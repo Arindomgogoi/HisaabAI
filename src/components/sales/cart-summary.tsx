@@ -77,7 +77,7 @@ export function CartSummary({
       toast.success(`Bill generated: ${result.invoiceNumber}`);
       onClearCart();
       setLoading(false);
-      router.push(`/sales/${result.saleId}`);
+      router.push(`/sales/${result.saleId}?print=1`);
     }
   }
 

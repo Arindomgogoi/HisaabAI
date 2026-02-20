@@ -30,17 +30,6 @@ export const navItems = [
     href: "/insights",
     icon: Brain,
   },
-  {
-    label: "Reports",
-    href: "/reports",
-    icon: BarChart3,
-    disabled: true,
-    badge: "Soon",
-  },
-  {
-    label: "Settings",
-    href: "/settings",
-    icon: Settings,
-    disabled: true,
-  },
+  { label: "Reports", href: "/reports", icon: BarChart3 },
+  { label: "Settings", href: "/settings", icon: Settings },
 ] as const;
