@@ -28,6 +28,8 @@ interface InvoiceData {
   subtotal: number;
   discount: number;
   totalAmount: number;
+  cgst: number;
+  sgst: number;
   paymentMode: PaymentMode;
   customer: { name: string; phone: string | null } | null;
   shop: {
@@ -154,6 +156,18 @@ export function InvoicePreview({ sale }: { sale: InvoiceData }) {
               <span className="text-muted-foreground">Subtotal</span>
               <span>{formatINR(sale.subtotal)}</span>
             </div>
+            {sale.cgst > 0 && (
+              <div className="flex justify-between text-xs">
+                <span className="text-muted-foreground">CGST</span>
+                <span>{formatINR(sale.cgst)}</span>
+              </div>
+            )}
+            {sale.sgst > 0 && (
+              <div className="flex justify-between text-xs">
+                <span className="text-muted-foreground">SGST</span>
+                <span>{formatINR(sale.sgst)}</span>
+              </div>
+            )}
             {sale.discount > 0 && (
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Discount</span>

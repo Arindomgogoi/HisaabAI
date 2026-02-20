@@ -25,6 +25,7 @@ interface Product {
   size: string;
   category: string;
   costPrice: number;
+  gstRate: number;
   bpc: number;
   warehouseCases: number;
 }
@@ -327,7 +328,7 @@ export function PurchaseForm({
                   </select>
                   {product && (
                     <p className="text-xs text-muted-foreground mt-1 sm:mt-0.5">
-                      {product.warehouseCases} cases in warehouse · {product.bpc} bottles/case
+                      {product.warehouseCases} cases in warehouse · {product.bpc} bottles/case · GST {product.gstRate}%
                     </p>
                   )}
                 </div>

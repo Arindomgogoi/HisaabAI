@@ -50,18 +50,35 @@ export async function createSale(input: CreateSaleInput) {
     }
   }
 
-  // Validate stock availability
+  // Validate stock availability and collect GST rates
+  const productGstRates = new Map<string, number>();
   for (const item of input.items) {
     const product = await prisma.product.findUnique({
       where: { id: item.productId },
-      select: { name: true, shopBottles: true, shopId: true },
+      select: { name: true, shopBottles: true, shopId: true, gstRate: true },
     });
     if (!product) return { error: `Product not found` };
     if (product.shopId !== shopId) return { error: "Unauthorized" };
     if (product.shopBottles < item.quantity) {
       return { error: `Not enough stock for ${product.name}. Available: ${product.shopBottles}` };
     }
+    productGstRates.set(item.productId, product.gstRate);
   }
+
+  // Calculate GST — MRP is tax-inclusive, back-calculate tax
+  let totalCgst = 0;
+  let totalSgst = 0;
+  const itemsWithGst = input.items.map((item) => {
+    const gstRate = productGstRates.get(item.productId) ?? 18;
+    const lineTotal = item.quantity * item.unitPrice;
+    const taxableValue = lineTotal / (1 + gstRate / 100);
+    const taxAmount = lineTotal - taxableValue;
+    totalCgst += taxAmount / 2;
+    totalSgst += taxAmount / 2;
+    return { ...item, gstRate };
+  });
+  totalCgst = Math.round(totalCgst * 100) / 100;
+  totalSgst = Math.round(totalSgst * 100) / 100;
 
   const invoiceNumber = generateInvoiceNumber();
 
@@ -77,15 +94,18 @@ export async function createSale(input: CreateSaleInput) {
           subtotal,
           discount,
           totalAmount,
+          cgst: totalCgst,
+          sgst: totalSgst,
           paymentMode: input.paymentMode,
           customerId: input.customerId || null,
           shopId,
           items: {
-            create: input.items.map((item) => ({
+            create: itemsWithGst.map((item) => ({
               productId: item.productId,
               quantity: item.quantity,
               unitPrice: item.unitPrice,
               totalPrice: item.quantity * item.unitPrice,
+              gstRate: item.gstRate,
             })),
           },
         },

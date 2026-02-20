@@ -32,6 +32,7 @@ export async function createProduct(formData: FormData) {
         mrp: data.mrp,
         costPrice: data.costPrice,
         bpc: data.bpc || BPC_MAP[data.size as SizeUnit],
+        gstRate: data.gstRate,
         reorderLevel: data.reorderLevel,
         shopId,
       },
@@ -73,6 +74,7 @@ export async function updateProduct(id: string, formData: FormData) {
         mrp: data.mrp,
         costPrice: data.costPrice,
         bpc: data.bpc || BPC_MAP[data.size as SizeUnit],
+        gstRate: data.gstRate,
         reorderLevel: data.reorderLevel,
       },
     });
