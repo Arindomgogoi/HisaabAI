@@ -17,8 +17,6 @@ export const navItems = [
     label: "Purchases",
     href: "/purchases",
     icon: Truck,
-    disabled: true,
-    badge: "Soon",
   },
   {
     label: "GST & Tax",

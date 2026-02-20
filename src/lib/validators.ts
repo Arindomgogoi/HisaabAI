@@ -60,6 +60,29 @@ export const registerSchema = z.object({
   state: z.string().default("Maharashtra"),
 });
 
+export const supplierSchema = z.object({
+  name: z.string().min(1, "Supplier name is required"),
+  phone: z.string().optional(),
+  contactName: z.string().optional(),
+  gstNumber: z.string().optional(),
+});
+
+export const purchaseItemSchema = z.object({
+  productId: z.string().min(1, "Product is required"),
+  cases: z.coerce.number().int().positive("Cases must be at least 1"),
+  costPerCase: z.coerce.number().positive("Cost per case must be positive"),
+});
+
+export const purchaseSchema = z.object({
+  invoiceNumber: z.string().min(1, "Invoice number is required"),
+  purchaseDate: z.string().min(1, "Purchase date is required"),
+  supplierId: z.string().min(1, "Supplier is required"),
+  paymentStatus: z.enum(["paid", "pending"]).default("paid"),
+  items: z.array(purchaseItemSchema).min(1, "At least one item required"),
+});
+
+export type SupplierFormValues = z.infer<typeof supplierSchema>;
+export type PurchaseFormValues = z.infer<typeof purchaseSchema>;
 export type ProductFormValues = z.infer<typeof productSchema>;
 export type StockTransferFormValues = z.infer<typeof stockTransferSchema>;
 export type CreateSaleFormValues = z.infer<typeof createSaleSchema>;
