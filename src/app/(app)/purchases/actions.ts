@@ -96,7 +96,7 @@ export async function createSupplier(formData: FormData) {
       data: { name, phone, contactName, gstNumber, shopId },
     });
     revalidatePath("/purchases");
-    return { success: true, supplier: { id: supplier.id, name: supplier.name } };
+    return { success: true, supplier: { id: supplier.id, name: supplier.name, phone: supplier.phone } };
   } catch {
     return { error: "Failed to create supplier" };
   }
