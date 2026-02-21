@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { navItems } from "./nav-items";
-import { Badge } from "@/components/ui/badge";
 import { ChevronLeft, Sparkles } from "lucide-react";
 import { useState } from "react";
 
@@ -51,33 +50,6 @@ export function Sidebar() {
           const isActive =
             pathname === item.href || pathname.startsWith(item.href + "/");
           const Icon = item.icon;
-
-          if ("disabled" in item && item.disabled) {
-            return (
-              <div
-                key={item.href}
-                className={cn(
-                  "flex items-center gap-3 px-3 py-2 rounded-lg text-sm opacity-50 cursor-not-allowed",
-                  collapsed && "justify-center px-2"
-                )}
-              >
-                <Icon className="w-5 h-5 shrink-0" />
-                {!collapsed && (
-                  <>
-                    <span className="flex-1">{item.label}</span>
-                    {"badge" in item && item.badge && (
-                      <Badge
-                        variant="secondary"
-                        className="text-[10px] px-1.5 py-0 bg-sidebar-accent text-sidebar-accent-foreground"
-                      >
-                        {item.badge}
-                      </Badge>
-                    )}
-                  </>
-                )}
-              </div>
-            );
-          }
 
           return (
             <Link

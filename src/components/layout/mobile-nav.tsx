@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { navItems } from "./nav-items";
-import { Badge } from "@/components/ui/badge";
 import { Sparkles } from "lucide-react";
 import { SheetClose } from "@/components/ui/sheet";
 
@@ -29,26 +28,6 @@ export function MobileNav() {
           const isActive =
             pathname === item.href || pathname.startsWith(item.href + "/");
           const Icon = item.icon;
-
-          if ("disabled" in item && item.disabled) {
-            return (
-              <div
-                key={item.href}
-                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm opacity-50 cursor-not-allowed"
-              >
-                <Icon className="w-5 h-5 shrink-0" />
-                <span className="flex-1">{item.label}</span>
-                {"badge" in item && item.badge && (
-                  <Badge
-                    variant="secondary"
-                    className="text-[10px] px-1.5 py-0 bg-sidebar-accent text-sidebar-accent-foreground"
-                  >
-                    {item.badge}
-                  </Badge>
-                )}
-              </div>
-            );
-          }
 
           return (
             <SheetClose asChild key={item.href}>
