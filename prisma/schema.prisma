@@ -127,7 +127,7 @@ model Product {
   warehouseCases   Int             @default(0)
   warehouseBottles Int             @default(0)
   shopBottles      Int             @default(0)
-  gstRate          Float           @default(18)
+  gstRate          Float           @default(0)
   reorderLevel     Int             @default(10)
   isActive         Boolean         @default(true)
   shopId           String
@@ -182,7 +182,7 @@ model SaleItem {
   quantity   Int
   unitPrice  Decimal @db.Decimal(10, 2)
   totalPrice Decimal @db.Decimal(10, 2)
-  gstRate    Float   @default(18)
+  gstRate    Float   @default(0)
 
   @@map("sale_items")
 }
@@ -233,7 +233,7 @@ model PurchaseItem {
   cases       Int
   costPerCase Decimal  @db.Decimal(10, 2)
   totalCost   Decimal  @db.Decimal(10, 2)
-  gstRate     Float    @default(18)
+  gstRate     Float    @default(0)
 
   @@map("purchase_items")
 }

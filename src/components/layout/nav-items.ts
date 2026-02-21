@@ -18,7 +18,7 @@ export const navItems = [
     href: "/purchases",
     icon: Truck,
   },
-  { label: "GST & Tax", href: "/gst", icon: FileText },
+  { label: "Tax & Compliance", href: "/gst", icon: FileText },
   {
     label: "AI Insights",
     href: "/insights",

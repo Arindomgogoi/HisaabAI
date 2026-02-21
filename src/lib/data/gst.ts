@@ -1,6 +1,72 @@
 import { prisma } from "@/lib/prisma";
 import { format } from "date-fns";
 
+export async function getComplianceSummary(shopId: string, from: Date, to: Date) {
+  const [salesResult, purchasesResult, shop] = await Promise.all([
+    prisma.sale.aggregate({
+      where: { shopId, saleDate: { gte: from, lte: to } },
+      _sum: { totalAmount: true },
+      _count: { id: true },
+    }),
+    prisma.purchase.aggregate({
+      where: { shopId, purchaseDate: { gte: from, lte: to } },
+      _sum: { totalAmount: true },
+      _count: { id: true },
+    }),
+    prisma.shop.findUnique({ where: { id: shopId }, select: { licenseNumber: true } }),
+  ]);
+
+  const totalSales = Number(salesResult._sum.totalAmount ?? 0);
+  const totalPurchases = Number(purchasesResult._sum.totalAmount ?? 0);
+
+  return {
+    totalSales,
+    totalPurchases,
+    grossProfit: totalSales - totalPurchases,
+    saleCount: salesResult._count.id,
+    purchaseCount: purchasesResult._count.id,
+    licenseNumber: shop?.licenseNumber ?? null,
+  };
+}
+
+export async function getMonthlyComplianceBreakdown(shopId: string, from: Date, to: Date) {
+  const [sales, purchases] = await Promise.all([
+    prisma.sale.findMany({
+      where: { shopId, saleDate: { gte: from, lte: to } },
+      select: { saleDate: true, totalAmount: true },
+    }),
+    prisma.purchase.findMany({
+      where: { shopId, purchaseDate: { gte: from, lte: to } },
+      select: { purchaseDate: true, totalAmount: true },
+    }),
+  ]);
+
+  const monthMap = new Map<string, { sales: number; purchases: number }>();
+
+  for (const sale of sales) {
+    const month = format(new Date(sale.saleDate), "yyyy-MM");
+    const existing = monthMap.get(month) ?? { sales: 0, purchases: 0 };
+    existing.sales += Number(sale.totalAmount);
+    monthMap.set(month, existing);
+  }
+
+  for (const purchase of purchases) {
+    const month = format(new Date(purchase.purchaseDate), "yyyy-MM");
+    const existing = monthMap.get(month) ?? { sales: 0, purchases: 0 };
+    existing.purchases += Number(purchase.totalAmount);
+    monthMap.set(month, existing);
+  }
+
+  return Array.from(monthMap.entries())
+    .map(([month, data]) => ({
+      month,
+      sales: data.sales,
+      purchases: data.purchases,
+      grossProfit: data.sales - data.purchases,
+    }))
+    .sort((a, b) => b.month.localeCompare(a.month));
+}
+
 export async function getGSTSummary(shopId: string, from: Date, to: Date) {
   const [salesResult, purchasesResult] = await Promise.all([
     prisma.sale.aggregate({

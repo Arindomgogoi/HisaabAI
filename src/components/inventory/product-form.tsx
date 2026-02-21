@@ -191,7 +191,7 @@ export function ProductForm({ product, mode }: ProductFormProps) {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>GST Rate</Label>
-              <Select name="gstRate" defaultValue={String(product?.gstRate ?? 18)} required>
+              <Select name="gstRate" defaultValue={String(product?.gstRate ?? 0)} required>
                 <SelectTrigger>
                   <SelectValue placeholder="Select GST rate" />
                 </SelectTrigger>
@@ -203,6 +203,9 @@ export function ProductForm({ product, mode }: ProductFormProps) {
                   ))}
                 </SelectContent>
               </Select>
+              <p className="text-xs text-muted-foreground">
+                Liquor is excise-governed — keep at 0%
+              </p>
             </div>
             <div className="space-y-2">
               <Label htmlFor="reorderLevel">Reorder Level (bottles)</Label>

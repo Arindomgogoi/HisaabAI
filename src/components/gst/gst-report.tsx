@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { format, subMonths, startOfMonth, endOfMonth } from "date-fns";
-import { FileText, TrendingDown, TrendingUp, Receipt, AlertCircle } from "lucide-react";
+import { TrendingDown, TrendingUp, Wallet, ShoppingBag, Info, FileText } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,43 +26,31 @@ function formatCurrency(n: number) {
 }
 
 interface Props {
-  summary: {
-    outputCGST: number;
-    outputSGST: number;
-    inputCGST: number;
-    inputSGST: number;
-    netCGST: number;
-    netSGST: number;
-    netPayable: number;
-    taxableValue: number;
+  complianceSummary: {
+    totalSales: number;
+    totalPurchases: number;
+    grossProfit: number;
+    saleCount: number;
+    purchaseCount: number;
+    licenseNumber: string | null;
   };
   monthlyBreakdown: Array<{
     month: string;
-    taxableSales: number;
-    outputCGST: number;
-    outputSGST: number;
-    inputCGST: number;
-    inputSGST: number;
-    netPayable: number;
-  }>;
-  hsnSummary: Array<{
-    hsnCode: string;
-    gstRate: number;
-    qty: number;
-    taxableValue: number;
-    cgst: number;
-    sgst: number;
+    sales: number;
+    purchases: number;
+    grossProfit: number;
   }>;
   shopGstin: string | null;
+  licenseNumber: string | null;
   fromDate: string;
   toDate: string;
 }
 
 export function GSTReport({
-  summary,
+  complianceSummary,
   monthlyBreakdown,
-  hsnSummary,
   shopGstin,
+  licenseNumber,
   fromDate,
   toDate,
 }: Props) {
@@ -91,27 +79,43 @@ export function GSTReport({
     },
   ];
 
+  const marginPct =
+    complianceSummary.totalSales > 0
+      ? ((complianceSummary.grossProfit / complianceSummary.totalSales) * 100).toFixed(1)
+      : "0.0";
+
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-heading font-bold">GST &amp; Tax</h1>
+          <h1 className="text-2xl font-heading font-bold">Tax &amp; Compliance</h1>
           <p className="text-muted-foreground mt-1 text-sm">
             {format(new Date(fromDate), "dd MMM yyyy")} —{" "}
             {format(new Date(toDate), "dd MMM yyyy")}
           </p>
         </div>
-        {shopGstin ? (
-          <Badge variant="outline" className="font-mono text-xs">
-            GSTIN: {shopGstin}
-          </Badge>
-        ) : (
-          <div className="flex items-center gap-1.5 text-amber-600 text-xs">
-            <AlertCircle className="w-3.5 h-3.5" />
-            <span>Add GSTIN in Settings</span>
-          </div>
-        )}
+        <div className="flex flex-wrap gap-2">
+          {licenseNumber && (
+            <Badge variant="outline" className="font-mono text-xs">
+              License: {licenseNumber}
+            </Badge>
+          )}
+          {shopGstin && (
+            <Badge variant="outline" className="font-mono text-xs">
+              GSTIN: {shopGstin}
+            </Badge>
+          )}
+        </div>
+      </div>
+
+      {/* Info Banner */}
+      <div className="flex items-start gap-3 p-3 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg text-sm">
+        <Info className="w-4 h-4 text-amber-600 mt-0.5 shrink-0" />
+        <p className="text-amber-800 dark:text-amber-200">
+          Alcoholic beverages are outside India&apos;s GST scope — governed by State Excise Duty &amp; VAT instead.
+          This page shows your business compliance summary for excise audit records.
+        </p>
       </div>
 
       {/* Date Range Picker */}
@@ -162,45 +166,51 @@ export function GSTReport({
         <Card>
           <CardContent className="pt-4 pb-3">
             <div className="flex items-center gap-2 mb-1">
-              <TrendingUp className="w-3.5 h-3.5 text-red-500" />
-              <p className="text-xs text-muted-foreground">Output Tax</p>
+              <TrendingUp className="w-3.5 h-3.5 text-blue-500" />
+              <p className="text-xs text-muted-foreground">Total Sales</p>
             </div>
-            <p className="text-xl font-bold">{formatCurrency(summary.outputCGST + summary.outputSGST)}</p>
+            <p className="text-xl font-bold">{formatCurrency(complianceSummary.totalSales)}</p>
             <p className="text-xs text-muted-foreground mt-0.5">
-              CGST {formatCurrency(summary.outputCGST)} + SGST {formatCurrency(summary.outputSGST)}
+              {complianceSummary.saleCount} invoices
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="pt-4 pb-3">
             <div className="flex items-center gap-2 mb-1">
-              <TrendingDown className="w-3.5 h-3.5 text-green-500" />
-              <p className="text-xs text-muted-foreground">Input Tax Credit</p>
+              <ShoppingBag className="w-3.5 h-3.5 text-orange-500" />
+              <p className="text-xs text-muted-foreground">Total Purchases</p>
             </div>
-            <p className="text-xl font-bold">{formatCurrency(summary.inputCGST + summary.inputSGST)}</p>
+            <p className="text-xl font-bold">{formatCurrency(complianceSummary.totalPurchases)}</p>
             <p className="text-xs text-muted-foreground mt-0.5">
-              CGST {formatCurrency(summary.inputCGST)} + SGST {formatCurrency(summary.inputSGST)}
+              {complianceSummary.purchaseCount} orders
             </p>
           </CardContent>
         </Card>
-        <Card className={summary.netPayable > 0 ? "border-red-200 bg-red-50/50 dark:bg-red-950/20" : "border-green-200 bg-green-50/50 dark:bg-green-950/20"}>
+        <Card className={complianceSummary.grossProfit >= 0 ? "border-green-200 bg-green-50/50 dark:bg-green-950/20" : "border-red-200 bg-red-50/50 dark:bg-red-950/20"}>
           <CardContent className="pt-4 pb-3">
             <div className="flex items-center gap-2 mb-1">
-              <Receipt className="w-3.5 h-3.5 text-muted-foreground" />
-              <p className="text-xs text-muted-foreground">Net Payable</p>
+              <Wallet className="w-3.5 h-3.5 text-muted-foreground" />
+              <p className="text-xs text-muted-foreground">Gross Profit</p>
             </div>
-            <p className={`text-xl font-bold ${summary.netPayable > 0 ? "text-red-600" : "text-green-600"}`}>
-              {formatCurrency(summary.netPayable)}
+            <p className={`text-xl font-bold ${complianceSummary.grossProfit >= 0 ? "text-green-600" : "text-red-600"}`}>
+              {formatCurrency(complianceSummary.grossProfit)}
             </p>
             <p className="text-xs text-muted-foreground mt-0.5">
-              {summary.netPayable > 0 ? "Tax owed" : "Credit carry-forward"}
+              {marginPct}% margin
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="pt-4 pb-3">
-            <p className="text-xs text-muted-foreground">Taxable Sales Value</p>
-            <p className="text-xl font-bold mt-0.5">{formatCurrency(summary.taxableValue)}</p>
+            <div className="flex items-center gap-2 mb-1">
+              <TrendingDown className="w-3.5 h-3.5 text-muted-foreground" />
+              <p className="text-xs text-muted-foreground">Excise Tax</p>
+            </div>
+            <p className="text-xl font-bold text-muted-foreground">N/A</p>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Built into MRP by state
+            </p>
           </CardContent>
         </Card>
       </div>
@@ -211,7 +221,8 @@ export function GSTReport({
           <CardHeader className="pb-0">
             <CardTitle className="text-base flex items-center gap-2">
               <FileText className="w-4 h-4 text-muted-foreground" />
-              Monthly GST Summary
+              Monthly Business Summary
+              <span className="text-xs font-normal text-muted-foreground ml-1">(for excise audit records)</span>
             </CardTitle>
           </CardHeader>
           <CardContent className="p-0 mt-3">
@@ -219,11 +230,10 @@ export function GSTReport({
               <TableHeader>
                 <TableRow>
                   <TableHead>Month</TableHead>
-                  <TableHead className="text-right">Taxable Sales</TableHead>
-                  <TableHead className="text-right">Output CGST</TableHead>
-                  <TableHead className="text-right">Output SGST</TableHead>
-                  <TableHead className="text-right hidden sm:table-cell">ITC</TableHead>
-                  <TableHead className="text-right">Net Payable</TableHead>
+                  <TableHead className="text-right">Sales</TableHead>
+                  <TableHead className="text-right">Purchases</TableHead>
+                  <TableHead className="text-right">Gross Profit</TableHead>
+                  <TableHead className="text-right hidden sm:table-cell">Margin</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -233,70 +243,16 @@ export function GSTReport({
                       {format(new Date(row.month + "-01"), "MMM yyyy")}
                     </TableCell>
                     <TableCell className="text-right text-sm">
-                      {formatCurrency(row.taxableSales)}
+                      {formatCurrency(row.sales)}
                     </TableCell>
                     <TableCell className="text-right text-sm">
-                      {formatCurrency(row.outputCGST)}
+                      {formatCurrency(row.purchases)}
                     </TableCell>
-                    <TableCell className="text-right text-sm">
-                      {formatCurrency(row.outputSGST)}
+                    <TableCell className={`text-right font-semibold ${row.grossProfit >= 0 ? "text-green-600" : "text-red-600"}`}>
+                      {formatCurrency(row.grossProfit)}
                     </TableCell>
                     <TableCell className="text-right text-sm text-muted-foreground hidden sm:table-cell">
-                      {formatCurrency(row.inputCGST + row.inputSGST)}
-                    </TableCell>
-                    <TableCell className={`text-right font-semibold ${row.netPayable > 0 ? "text-red-600" : "text-green-600"}`}>
-                      {formatCurrency(row.netPayable)}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* HSN Summary */}
-      {hsnSummary.length > 0 && (
-        <Card>
-          <CardHeader className="pb-0">
-            <CardTitle className="text-base flex items-center gap-2">
-              <FileText className="w-4 h-4 text-muted-foreground" />
-              HSN-wise Summary
-              <span className="text-xs font-normal text-muted-foreground ml-1">(for GSTR-1 filing)</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-0 mt-3">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>HSN Code</TableHead>
-                  <TableHead>GST Rate</TableHead>
-                  <TableHead className="text-center">Qty</TableHead>
-                  <TableHead className="text-right">Taxable Value</TableHead>
-                  <TableHead className="text-right">CGST</TableHead>
-                  <TableHead className="text-right">SGST</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {hsnSummary.map((row) => (
-                  <TableRow key={row.hsnCode}>
-                    <TableCell className="font-mono text-sm">{row.hsnCode}</TableCell>
-                    <TableCell>
-                      <Badge variant="secondary" className="text-xs">
-                        {row.gstRate}%
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-center text-sm text-muted-foreground">
-                      {row.qty}
-                    </TableCell>
-                    <TableCell className="text-right text-sm">
-                      {formatCurrency(row.taxableValue)}
-                    </TableCell>
-                    <TableCell className="text-right text-sm">
-                      {formatCurrency(row.cgst)}
-                    </TableCell>
-                    <TableCell className="text-right text-sm">
-                      {formatCurrency(row.sgst)}
+                      {row.sales > 0 ? ((row.grossProfit / row.sales) * 100).toFixed(1) : "0.0"}%
                     </TableCell>
                   </TableRow>
                 ))}
@@ -307,11 +263,11 @@ export function GSTReport({
       )}
 
       {/* Empty state */}
-      {monthlyBreakdown.length === 0 && hsnSummary.length === 0 && (
+      {monthlyBreakdown.length === 0 && (
         <Card className="border-dashed">
           <CardContent className="py-16 text-center">
             <FileText className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
-            <p className="font-semibold">No tax data in this period</p>
+            <p className="font-semibold">No data in this period</p>
             <p className="text-muted-foreground text-sm mt-1">
               Sales and purchases in this period will appear here
             </p>
