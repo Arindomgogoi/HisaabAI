@@ -3,10 +3,15 @@ import { auth } from "@/lib/auth";
 import Anthropic from "@anthropic-ai/sdk";
 import { getBusinessDataForAI } from "@/lib/data/insights";
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-
 export async function POST() {
   try {
+    if (!process.env.ANTHROPIC_API_KEY) {
+      return NextResponse.json(
+        { error: "AI Insights not configured. Please add ANTHROPIC_API_KEY." },
+        { status: 503 }
+      );
+    }
+    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
     const session = await auth();
     if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
