@@ -18,10 +18,16 @@ export async function getTodaySummary(shopId: string) {
     }),
   ]);
 
-  const todayItems = await prisma.saleItem.aggregate({
-    where: { sale: { shopId, saleDate: { gte: today } } },
-    _sum: { quantity: true },
-  });
+  const [todayItems, yesterdayItems] = await Promise.all([
+    prisma.saleItem.aggregate({
+      where: { sale: { shopId, saleDate: { gte: today } } },
+      _sum: { quantity: true },
+    }),
+    prisma.saleItem.aggregate({
+      where: { sale: { shopId, saleDate: { gte: yesterday, lt: today } } },
+      _sum: { quantity: true },
+    }),
+  ]);
 
   // Calculate avg margin from today's sales
   const todaySaleItems = await prisma.saleItem.findMany({
@@ -45,13 +51,27 @@ export async function getTodaySummary(shopId: string) {
       ? ((todayRevenue - yesterdayRevenue) / yesterdayRevenue) * 100
       : 0;
 
+  const todayItemsSold = todayItems._sum.quantity ?? 0;
+  const yesterdayItemsSold = yesterdayItems._sum.quantity ?? 0;
+  const itemsChange =
+    yesterdayItemsSold > 0
+      ? ((todayItemsSold - yesterdayItemsSold) / yesterdayItemsSold) * 100
+      : 0;
+
+  const todayTransactions = todaySales._count;
+  const transactionsChange =
+    yesterdaySales._count > 0
+      ? ((todayTransactions - yesterdaySales._count) / yesterdaySales._count) * 100
+      : 0;
+
   return {
     todayRevenue,
     yesterdayRevenue,
     revenueChange,
-    todayItemsSold: todayItems._sum.quantity ?? 0,
-    todayTransactions: todaySales._count,
-    yesterdayTransactions: yesterdaySales._count,
+    todayItemsSold,
+    itemsChange,
+    todayTransactions,
+    transactionsChange,
     avgMargin,
   };
 }
@@ -149,6 +169,10 @@ export async function getRecentSales(shopId: string, limit: number = 10) {
     itemCount: s._count.items,
     customerName: s.customer?.name ?? null,
   }));
+}
+
+export async function getProductCount(shopId: string) {
+  return prisma.product.count({ where: { shopId, isActive: true } });
 }
 
 export async function getCategorySales(shopId: string) {

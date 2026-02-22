@@ -7,7 +7,9 @@ interface SummaryCardsProps {
   todayRevenue: number;
   revenueChange: number;
   todayItemsSold: number;
+  itemsChange: number;
   todayTransactions: number;
+  transactionsChange: number;
   avgMargin: number;
 }
 
@@ -15,7 +17,9 @@ export function SummaryCards({
   todayRevenue,
   revenueChange,
   todayItemsSold,
+  itemsChange,
   todayTransactions,
+  transactionsChange,
   avgMargin,
 }: SummaryCardsProps) {
   const cards = [
@@ -30,7 +34,7 @@ export function SummaryCards({
     {
       label: "Items Sold",
       value: formatNumber(todayItemsSold),
-      change: null,
+      change: itemsChange,
       icon: ShoppingBag,
       color: "text-blue-600",
       bg: "bg-blue-50 dark:bg-blue-950/30",
@@ -46,7 +50,7 @@ export function SummaryCards({
     {
       label: "Transactions",
       value: formatNumber(todayTransactions),
-      change: null,
+      change: transactionsChange,
       icon: Receipt,
       color: "text-violet-600",
       bg: "bg-violet-50 dark:bg-violet-950/30",

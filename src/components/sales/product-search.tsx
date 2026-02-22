@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { SIZE_SHORT, CATEGORY_LABELS } from "@/lib/constants";
@@ -29,6 +29,7 @@ const CATEGORIES: (ProductCategory | "ALL")[] = [
 export function ProductSearch({ products, onAddItem }: ProductSearchProps) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState<ProductCategory | "ALL">("ALL");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const filtered = useMemo(() => {
     let result = products;
@@ -46,14 +47,40 @@ export function ProductSearch({ products, onAddItem }: ProductSearchProps) {
     return result;
   }, [products, search, category]);
 
+  // Press "/" to focus search, Escape to clear
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      const tag = (e.target as HTMLElement).tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA") return;
+      if (e.key === "/") {
+        e.preventDefault();
+        inputRef.current?.focus();
+      }
+    }
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, []);
+
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Escape") {
+      setSearch("");
+      inputRef.current?.blur();
+    }
+    if (e.key === "Enter" && filtered.length > 0) {
+      onAddItem(filtered[0]);
+    }
+  }
+
   return (
     <div className="space-y-3">
       <div className="relative">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
         <Input
-          placeholder="Search products..."
+          ref={inputRef}
+          placeholder='Search products… (press "/" to focus)'
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={handleKeyDown}
           className="pl-9"
         />
       </div>
@@ -81,11 +108,14 @@ export function ProductSearch({ products, onAddItem }: ProductSearchProps) {
             No products found
           </p>
         )}
-        {filtered.map((p) => (
+        {filtered.map((p, i) => (
           <button
             key={p.id}
             onClick={() => onAddItem(p)}
-            className="w-full flex items-center justify-between p-2.5 rounded-lg hover:bg-muted/50 transition-colors text-left group"
+            className={cn(
+              "w-full flex items-center justify-between p-2.5 rounded-lg hover:bg-muted/50 transition-colors text-left group",
+              i === 0 && search ? "ring-1 ring-amber-300 bg-amber-50/50 dark:bg-amber-950/10" : ""
+            )}
           >
             <div className="min-w-0">
               <p className="text-sm font-medium truncate">{p.name}</p>
@@ -103,6 +133,14 @@ export function ProductSearch({ products, onAddItem }: ProductSearchProps) {
           </button>
         ))}
       </div>
+
+      {products.length > 0 && (
+        <p className="text-xs text-muted-foreground text-center pt-1">
+          Press <kbd className="px-1 py-0.5 rounded bg-muted font-mono text-[10px]">/</kbd> to search &middot;{" "}
+          <kbd className="px-1 py-0.5 rounded bg-muted font-mono text-[10px]">Enter</kbd> to add top result &middot;{" "}
+          <kbd className="px-1 py-0.5 rounded bg-muted font-mono text-[10px]">Esc</kbd> to clear
+        </p>
+      )}
     </div>
   );
 }

@@ -77,38 +77,3 @@ export const CATEGORY_ICONS: Record<ProductCategory, string> = {
   BEER: "🍺",
 };
 
-/** Application navigation items */
-export const NAV_ITEMS = [
-  { label: "Dashboard", href: "/dashboard", icon: "LayoutDashboard" },
-  { label: "Inventory", href: "/inventory", icon: "Package" },
-  { label: "Sales & POS", href: "/sales", icon: "ShoppingCart" },
-  {
-    label: "Purchases",
-    href: "/purchases",
-    icon: "Truck",
-    disabled: true,
-    badge: "Soon",
-  },
-  {
-    label: "GST & Tax",
-    href: "/gst",
-    icon: "FileText",
-    disabled: true,
-    badge: "Soon",
-  },
-  {
-    label: "Insights",
-    href: "/insights",
-    icon: "Brain",
-    disabled: true,
-    badge: "Soon",
-  },
-  {
-    label: "Reports",
-    href: "/reports",
-    icon: "BarChart3",
-    disabled: true,
-    badge: "Soon",
-  },
-  { label: "Settings", href: "/settings", icon: "Settings", disabled: true },
-] as const;
