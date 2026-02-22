@@ -38,7 +38,6 @@ export default function manifest(): MetadataRoute.Manifest {
         src: "/screenshots/dashboard.png",
         sizes: "390x844",
         type: "image/png",
-        // @ts-expect-error - form_factor is valid but not in Next.js types yet
         form_factor: "narrow",
         label: "Dashboard overview",
       },
