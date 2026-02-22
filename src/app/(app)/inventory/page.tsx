@@ -4,7 +4,7 @@ import { getProducts } from "@/lib/data/inventory";
 import { ProductTable } from "@/components/inventory/product-table";
 import { ProductFilters } from "@/components/inventory/product-filters";
 import { Button } from "@/components/ui/button";
-import { Plus, ArrowLeftRight } from "lucide-react";
+import { Plus, ArrowLeftRight, PackagePlus } from "lucide-react";
 import Link from "next/link";
 import type { ProductCategory } from "@/generated/prisma";
 
@@ -39,6 +39,12 @@ export default async function InventoryPage({ searchParams }: Props) {
           </p>
         </div>
         <div className="flex gap-2">
+          <Link href="/inventory/receive">
+            <Button variant="outline" size="sm">
+              <PackagePlus className="w-4 h-4 mr-2" />
+              Receive Stock
+            </Button>
+          </Link>
           <Link href="/inventory/transfer">
             <Button variant="outline" size="sm">
               <ArrowLeftRight className="w-4 h-4 mr-2" />

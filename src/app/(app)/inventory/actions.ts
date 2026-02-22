@@ -153,3 +153,31 @@ export async function transferStock(formData: FormData) {
   revalidatePath("/dashboard");
   return { success: true, bottlesGenerated };
 }
+
+export async function receiveStock(
+  entries: { productId: string; cases: number }[]
+) {
+  const session = await auth();
+  const shopId = (session?.user as Record<string, unknown>)?.shopId as string;
+  if (!shopId) return { error: "Not authenticated" };
+
+  const validEntries = entries.filter((e) => e.cases > 0);
+  if (validEntries.length === 0) return { error: "No stock quantities entered" };
+
+  try {
+    await prisma.$transaction(
+      validEntries.map((entry) =>
+        prisma.product.update({
+          where: { id: entry.productId, shopId },
+          data: { warehouseCases: { increment: entry.cases } },
+        })
+      )
+    );
+    revalidatePath("/inventory");
+    revalidatePath("/inventory/receive");
+    revalidatePath("/dashboard");
+    return { success: true, count: validEntries.length };
+  } catch {
+    return { error: "Failed to update stock" };
+  }
+}

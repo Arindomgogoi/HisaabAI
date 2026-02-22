@@ -6,7 +6,6 @@ import {
   FileText,
   Brain,
   BarChart3,
-  Settings,
 } from "lucide-react";
 
 export const navItems = [
@@ -25,5 +24,4 @@ export const navItems = [
     icon: Brain,
   },
   { label: "Reports", href: "/reports", icon: BarChart3 },
-  { label: "Settings", href: "/settings", icon: Settings },
 ] as const;
