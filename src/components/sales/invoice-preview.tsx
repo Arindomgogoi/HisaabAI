@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { SIZE_SHORT, PAYMENT_MODE_LABELS } from "@/lib/constants";
 import { formatINR, formatDate, formatDateTime } from "@/lib/formatters";
-import { Printer, ArrowLeft } from "lucide-react";
+import { Printer, ArrowLeft, Receipt, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import type { SizeUnit, PaymentMode } from "@/generated/prisma";
 
@@ -41,6 +41,34 @@ interface InvoiceData {
   items: InvoiceItem[];
 }
 
+function buildWhatsAppMessage(sale: InvoiceData): string {
+  const lines: string[] = [];
+  lines.push(`*${sale.shop.name}*`);
+  if (sale.shop.phone) lines.push(`Ph: ${sale.shop.phone}`);
+  lines.push("");
+  lines.push(`*Invoice: ${sale.invoiceNumber}*`);
+  lines.push(`Date: ${formatDateTime(sale.saleDate)}`);
+  lines.push(`Payment: ${PAYMENT_MODE_LABELS[sale.paymentMode]}`);
+  if (sale.customer) lines.push(`Customer: ${sale.customer.name}`);
+  lines.push("");
+  lines.push("─".repeat(28));
+  for (const item of sale.items) {
+    lines.push(
+      `${item.productName} ${SIZE_SHORT[item.productSize]} (${item.productBrand})`
+    );
+    lines.push(
+      `  ${item.quantity} × ${formatINR(item.unitPrice)} = *${formatINR(item.totalPrice)}*`
+    );
+  }
+  lines.push("─".repeat(28));
+  if (sale.discount > 0) lines.push(`Discount: -${formatINR(sale.discount)}`);
+  lines.push(`*TOTAL: ${formatINR(sale.totalAmount)}*`);
+  lines.push("");
+  lines.push("_Thank you for your purchase!_");
+  lines.push("_Powered by HisaabAI_");
+  return lines.join("\n");
+}
+
 export function InvoicePreview({ sale }: { sale: InvoiceData }) {
   const searchParams = useSearchParams();
   useEffect(() => {
@@ -50,23 +78,46 @@ export function InvoicePreview({ sale }: { sale: InvoiceData }) {
     }
   }, [searchParams]);
 
+  function handleWhatsApp() {
+    const msg = buildWhatsAppMessage(sale);
+    const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
+
   return (
     <div className="max-w-2xl mx-auto space-y-4">
-      <div className="flex items-center justify-between print:hidden">
+      <div className="flex flex-wrap items-center justify-between gap-2 print:hidden">
         <Link href="/sales">
           <Button variant="ghost" size="sm">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Sales
           </Button>
         </Link>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => window.print()}
-        >
-          <Printer className="w-4 h-4 mr-2" />
-          Print Invoice
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleWhatsApp}
+            className="text-green-600 border-green-200 hover:bg-green-50 hover:text-green-700"
+          >
+            <MessageCircle className="w-4 h-4 mr-1.5" />
+            WhatsApp
+          </Button>
+          <Link href={`/sales/${sale.id}/receipt?print=1`}>
+            <Button variant="outline" size="sm">
+              <Receipt className="w-4 h-4 mr-1.5" />
+              Thermal
+            </Button>
+          </Link>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => window.print()}
+          >
+            <Printer className="w-4 h-4 mr-2" />
+            Print
+          </Button>
+        </div>
       </div>
 
       <Card className="print:shadow-none print:border-none">
