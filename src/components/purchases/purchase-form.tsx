@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Plus, Trash2, Package, ArrowLeft } from "lucide-react";
+import { Plus, Trash2, Package, ArrowLeft, Camera, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -73,6 +73,59 @@ export function PurchaseForm({
     { productId: "", cases: 1, costPerCase: 0 },
   ]);
   const [submitting, setSubmitting] = useState(false);
+
+  // Invoice OCR
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [scanning, setScanning] = useState(false);
+
+  async function handleScanInvoice(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setScanning(true);
+    try {
+      const fd = new FormData();
+      fd.set("image", file);
+      const res = await fetch("/api/purchase-ocr", { method: "POST", body: fd });
+      const data = await res.json();
+      if (data.error) {
+        toast.error(data.error);
+        return;
+      }
+      // Auto-fill invoice fields
+      if (data.invoiceNumber) setInvoiceNumber(data.invoiceNumber);
+      if (data.date) setPurchaseDate(data.date);
+      // Auto-fill items — try to match product names
+      if (Array.isArray(data.items) && data.items.length > 0) {
+        const matched: LineItem[] = data.items.map(
+          (item: { productName: string; cases: number; ratePerCase: number }) => {
+            const name = (item.productName ?? "").toLowerCase();
+            const product = products.find(
+              (p) =>
+                p.name.toLowerCase().includes(name) ||
+                name.includes(p.name.toLowerCase())
+            );
+            return {
+              productId: product?.id ?? "",
+              cases: item.cases ?? 1,
+              costPerCase: item.ratePerCase ?? (product?.costPrice ?? 0),
+            };
+          }
+        );
+        setItems(matched.length > 0 ? matched : [{ productId: "", cases: 1, costPerCase: 0 }]);
+        const matchedCount = matched.filter((i) => i.productId).length;
+        toast.success(
+          `Invoice scanned: ${matched.length} item${matched.length !== 1 ? "s" : ""} found, ${matchedCount} matched`
+        );
+      } else {
+        toast.success("Invoice scanned — fill in the items manually");
+      }
+    } catch {
+      toast.error("Failed to scan invoice");
+    } finally {
+      setScanning(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  }
 
   // Quick-add supplier
   const [showAddSupplier, setShowAddSupplier] = useState(false);
@@ -160,19 +213,46 @@ export function PurchaseForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Hidden file input for OCR */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        capture="environment"
+        className="hidden"
+        onChange={handleScanInvoice}
+      />
+
       {/* Header */}
-      <div className="flex items-center gap-3">
-        <Link href="/purchases">
-          <Button variant="ghost" size="icon" className="h-8 w-8" type="button">
-            <ArrowLeft className="w-4 h-4" />
-          </Button>
-        </Link>
-        <div>
-          <h1 className="text-2xl font-heading font-bold">New Purchase</h1>
-          <p className="text-muted-foreground mt-0.5 text-sm">
-            Record stock received from supplier
-          </p>
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <Link href="/purchases">
+            <Button variant="ghost" size="icon" className="h-8 w-8" type="button">
+              <ArrowLeft className="w-4 h-4" />
+            </Button>
+          </Link>
+          <div>
+            <h1 className="text-2xl font-heading font-bold">New Purchase</h1>
+            <p className="text-muted-foreground mt-0.5 text-sm">
+              Record stock received from supplier
+            </p>
+          </div>
         </div>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => fileInputRef.current?.click()}
+          disabled={scanning}
+          className="shrink-0"
+        >
+          {scanning ? (
+            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+          ) : (
+            <Camera className="w-4 h-4 mr-2" />
+          )}
+          {scanning ? "Scanning..." : "Scan Invoice"}
+        </Button>
       </div>
 
       {/* Purchase Details */}

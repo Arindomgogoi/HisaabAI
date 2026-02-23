@@ -101,6 +101,23 @@ export async function createPurchase(data: {
   }
 }
 
+export async function markPurchasePaid(id: string) {
+  const session = await auth();
+  const shopId = (session?.user as Record<string, unknown>)?.shopId as string;
+  if (!shopId) return { error: "Not authenticated" };
+
+  try {
+    await prisma.purchase.updateMany({
+      where: { id, shopId },
+      data: { paymentStatus: "paid" },
+    });
+    revalidatePath("/purchases");
+    return { success: true };
+  } catch {
+    return { error: "Failed to update payment status" };
+  }
+}
+
 export async function createSupplier(formData: FormData) {
   const session = await auth();
   const shopId = (session?.user as Record<string, unknown>)?.shopId as string;

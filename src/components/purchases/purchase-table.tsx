@@ -1,8 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { format } from "date-fns";
-import { Plus, Truck, TrendingUp } from "lucide-react";
+import { Plus, Truck, TrendingUp, Loader2, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,6 +15,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { markPurchasePaid } from "@/app/(app)/purchases/actions";
+import { toast } from "sonner";
 
 interface Purchase {
   id: string;
@@ -33,14 +36,29 @@ function formatCurrency(n: number) {
   }).format(n);
 }
 
-export function PurchaseTable({ purchases }: { purchases: Purchase[] }) {
+export function PurchaseTable({ purchases: initialPurchases }: { purchases: Purchase[] }) {
+  const [purchases, setPurchases] = useState(initialPurchases);
+  const [markingId, setMarkingId] = useState<string | null>(null);
+
   const totalSpend = purchases.reduce((s, p) => s + p.totalAmount, 0);
-  const pendingCount = purchases.filter(
-    (p) => p.paymentStatus === "pending"
-  ).length;
+  const pendingCount = purchases.filter((p) => p.paymentStatus === "pending").length;
   const pendingAmount = purchases
     .filter((p) => p.paymentStatus === "pending")
     .reduce((s, p) => s + p.totalAmount, 0);
+
+  async function handleMarkPaid(id: string) {
+    setMarkingId(id);
+    const result = await markPurchasePaid(id);
+    setMarkingId(null);
+    if (result.error) {
+      toast.error(result.error);
+    } else {
+      setPurchases((prev) =>
+        prev.map((p) => (p.id === id ? { ...p, paymentStatus: "paid" } : p))
+      );
+      toast.success("Marked as paid");
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -67,9 +85,7 @@ export function PurchaseTable({ purchases }: { purchases: Purchase[] }) {
           <Card>
             <CardContent className="pt-4 pb-3">
               <p className="text-xs text-muted-foreground">Total Purchases</p>
-              <p className="text-xl font-bold mt-0.5">
-                {purchases.length}
-              </p>
+              <p className="text-xl font-bold mt-0.5">{purchases.length}</p>
             </CardContent>
           </Card>
           <Card>
@@ -83,9 +99,7 @@ export function PurchaseTable({ purchases }: { purchases: Purchase[] }) {
           {pendingCount > 0 && (
             <Card className="border-amber-200 bg-amber-50/50 dark:bg-amber-950/20">
               <CardContent className="pt-4 pb-3">
-                <p className="text-xs text-muted-foreground">
-                  Pending Payment
-                </p>
+                <p className="text-xs text-muted-foreground">Pending Payment</p>
                 <p className="text-xl font-bold mt-0.5 text-amber-600">
                   {formatCurrency(pendingAmount)}
                 </p>
@@ -157,20 +171,31 @@ export function PurchaseTable({ purchases }: { purchases: Purchase[] }) {
                       {formatCurrency(purchase.totalAmount)}
                     </TableCell>
                     <TableCell>
-                      <Badge
-                        variant={
-                          purchase.paymentStatus === "paid"
-                            ? "default"
-                            : "secondary"
-                        }
-                        className={
-                          purchase.paymentStatus === "paid"
-                            ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 hover:bg-green-100"
-                            : "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 hover:bg-amber-100"
-                        }
-                      >
-                        {purchase.paymentStatus === "paid" ? "Paid" : "Pending"}
-                      </Badge>
+                      {purchase.paymentStatus === "paid" ? (
+                        <Badge className="bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 hover:bg-green-100">
+                          Paid
+                        </Badge>
+                      ) : (
+                        <div className="flex items-center gap-2">
+                          <Badge className="bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 hover:bg-amber-100">
+                            Pending
+                          </Badge>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="h-6 text-xs px-2 text-green-600 border-green-200 hover:bg-green-50 hover:text-green-700"
+                            onClick={() => handleMarkPaid(purchase.id)}
+                            disabled={markingId === purchase.id}
+                          >
+                            {markingId === purchase.id ? (
+                              <Loader2 className="w-3 h-3 animate-spin" />
+                            ) : (
+                              <CheckCircle className="w-3 h-3 mr-1" />
+                            )}
+                            Mark Paid
+                          </Button>
+                        </div>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}
