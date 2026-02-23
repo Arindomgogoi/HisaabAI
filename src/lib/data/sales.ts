@@ -123,10 +123,59 @@ export async function getCustomers(shopId: string) {
   });
 }
 
+type RiskTier = "Safe" | "Moderate" | "Risky" | "High Risk";
+
+function computeTrustScore(
+  creditBalance: number,
+  creditLimit: number,
+  totalSales: number,
+  lastSaleDate: Date | null
+): { score: number; tier: RiskTier } {
+  let score = 100;
+
+  const utilization = creditLimit > 0 ? (creditBalance / creditLimit) * 100 : 0;
+
+  // Penalize high utilization
+  if (utilization >= 90) score -= 40;
+  else if (utilization >= 70) score -= 25;
+  else if (utilization >= 50) score -= 15;
+  else if (utilization >= 30) score -= 5;
+
+  // Penalize large absolute outstanding
+  if (creditBalance > 10000) score -= 15;
+  else if (creditBalance > 5000) score -= 10;
+  else if (creditBalance > 2000) score -= 5;
+
+  // Reward loyal customers
+  if (totalSales > 20) score += 10;
+  else if (totalSales > 10) score += 5;
+  else if (totalSales > 5) score += 2;
+
+  // Penalize inactive customers with outstanding balance
+  if (creditBalance > 0 && lastSaleDate) {
+    const daysSince = Math.floor(
+      (Date.now() - lastSaleDate.getTime()) / (1000 * 60 * 60 * 24)
+    );
+    if (daysSince > 60) score -= 15;
+    else if (daysSince > 30) score -= 8;
+  } else if (creditBalance > 0 && !lastSaleDate) {
+    score -= 15;
+  }
+
+  const finalScore = Math.max(0, Math.min(100, score));
+
+  let tier: RiskTier;
+  if (finalScore >= 80) tier = "Safe";
+  else if (finalScore >= 60) tier = "Moderate";
+  else if (finalScore >= 40) tier = "Risky";
+  else tier = "High Risk";
+
+  return { score: finalScore, tier };
+}
+
 export async function getCustomersWithDetails(shopId: string) {
   const customers = await prisma.customer.findMany({
     where: { shopId },
-    orderBy: { name: "asc" },
     include: {
       sales: {
         orderBy: { saleDate: "desc" },
@@ -137,21 +186,40 @@ export async function getCustomersWithDetails(shopId: string) {
     },
   });
 
-  return customers.map((c) => ({
-    id: c.id,
-    name: c.name,
-    phone: c.phone,
-    address: c.address,
-    creditLimit: Number(c.creditLimit),
-    creditBalance: Number(c.creditBalance),
-    totalSales: c._count.sales,
-    lastSale: c.sales[0]
-      ? {
-          date: c.sales[0].saleDate,
-          amount: Number(c.sales[0].totalAmount),
-        }
-      : null,
-  }));
+  return customers
+    .map((c) => {
+      const creditBalance = Number(c.creditBalance);
+      const creditLimit = Number(c.creditLimit);
+      const totalSales = c._count.sales;
+      const lastSaleDate = c.sales[0]?.saleDate ?? null;
+      const { score: trustScore, tier: riskTier } = computeTrustScore(
+        creditBalance,
+        creditLimit,
+        totalSales,
+        lastSaleDate
+      );
+      const collectionPriority = creditBalance * (100 - trustScore);
+
+      return {
+        id: c.id,
+        name: c.name,
+        phone: c.phone,
+        address: c.address,
+        creditLimit,
+        creditBalance,
+        totalSales,
+        lastSale: c.sales[0]
+          ? {
+              date: c.sales[0].saleDate,
+              amount: Number(c.sales[0].totalAmount),
+            }
+          : null,
+        trustScore,
+        riskTier,
+        collectionPriority,
+      };
+    })
+    .sort((a, b) => b.collectionPriority - a.collectionPriority);
 }
 
 export function generateInvoiceNumber(): string {

@@ -24,7 +24,7 @@ import {
 import { formatINR, formatDate } from "@/lib/formatters";
 import { recordPayment } from "@/app/(app)/sales/actions";
 import { cn } from "@/lib/utils";
-import { IndianRupee, Loader2 } from "lucide-react";
+import { IndianRupee, Loader2, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 
 interface KhataCustomer {
@@ -36,9 +36,25 @@ interface KhataCustomer {
   creditBalance: number;
   totalSales: number;
   lastSale: { date: Date; amount: number } | null;
+  trustScore: number;
+  riskTier: "Safe" | "Moderate" | "Risky" | "High Risk";
+  collectionPriority: number;
 }
 
-export function KhataTable({ customers }: { customers: KhataCustomer[] }) {
+const TIER_STYLES: Record<string, string> = {
+  "Safe": "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
+  "Moderate": "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400",
+  "Risky": "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400",
+  "High Risk": "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
+};
+
+export function KhataTable({
+  customers,
+  shopName,
+}: {
+  customers: KhataCustomer[];
+  shopName: string;
+}) {
   const [paymentCustomerId, setPaymentCustomerId] = useState<string | null>(
     null
   );
@@ -64,12 +80,20 @@ export function KhataTable({ customers }: { customers: KhataCustomer[] }) {
     setLoading(false);
   }
 
+  function buildWhatsAppUrl(phone: string, name: string, balance: number) {
+    const cleanPhone = phone.replace(/\D/g, "");
+    const fullPhone = cleanPhone.startsWith("91") ? cleanPhone : `91${cleanPhone}`;
+    const message = `Namaste ${name} ji,\n\n${shopName} mein aapka \u20b9${Math.round(balance).toLocaleString("en-IN")} outstanding balance hai.\n\nKripya jald se jald payment karein.\n\nShukriya \uD83D\uDE4F`;
+    return `https://wa.me/${fullPhone}?text=${encodeURIComponent(message)}`;
+  }
+
   return (
     <div className="rounded-lg border overflow-x-auto">
       <Table>
         <TableHeader>
           <TableRow>
             <TableHead>Customer</TableHead>
+            <TableHead className="hidden sm:table-cell">Trust</TableHead>
             <TableHead className="text-right">Balance</TableHead>
             <TableHead className="text-right hidden sm:table-cell">
               Limit
@@ -78,66 +102,93 @@ export function KhataTable({ customers }: { customers: KhataCustomer[] }) {
             <TableHead className="text-right hidden sm:table-cell">
               Sales
             </TableHead>
-            <TableHead className="w-[120px]"></TableHead>
+            <TableHead className="w-[140px]"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {customers.length === 0 && (
             <TableRow>
               <TableCell
-                colSpan={6}
+                colSpan={7}
                 className="text-center py-8 text-muted-foreground"
               >
                 No khata customers found
               </TableCell>
             </TableRow>
           )}
-          {customers.map((c) => {
-            const utilization =
-              c.creditLimit > 0 ? (c.creditBalance / c.creditLimit) * 100 : 0;
-            return (
-              <TableRow key={c.id}>
-                <TableCell>
-                  <div>
-                    <p className="font-medium text-sm">{c.name}</p>
-                    {c.phone && (
-                      <p className="text-xs text-muted-foreground">
-                        {c.phone}
-                      </p>
-                    )}
-                  </div>
-                </TableCell>
-                <TableCell className="text-right">
-                  <span
-                    className={cn(
-                      "font-semibold text-sm",
-                      c.creditBalance > 0 ? "text-red-600" : "text-green-600"
-                    )}
-                  >
-                    {formatINR(c.creditBalance)}
-                  </span>
-                  {utilization > 80 && (
-                    <Badge
-                      variant="destructive"
-                      className="text-[9px] ml-1 px-1"
-                    >
-                      {Math.round(utilization)}%
-                    </Badge>
+          {customers.map((c) => (
+            <TableRow key={c.id}>
+              <TableCell>
+                <div>
+                  <p className="font-medium text-sm">{c.name}</p>
+                  {c.phone && (
+                    <p className="text-xs text-muted-foreground">{c.phone}</p>
                   )}
-                </TableCell>
-                <TableCell className="text-right hidden sm:table-cell text-sm text-muted-foreground">
-                  {formatINR(c.creditLimit)}
-                </TableCell>
-                <TableCell className="hidden md:table-cell text-xs text-muted-foreground">
-                  {c.lastSale
-                    ? `${formatDate(c.lastSale.date)} — ${formatINR(c.lastSale.amount)}`
-                    : "—"}
-                </TableCell>
-                <TableCell className="text-right hidden sm:table-cell text-sm text-muted-foreground">
-                  {c.totalSales}
-                </TableCell>
-                <TableCell>
-                  {c.creditBalance > 0 && (
+                </div>
+              </TableCell>
+              <TableCell className="hidden sm:table-cell">
+                <span
+                  className={cn(
+                    "inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full",
+                    TIER_STYLES[c.riskTier]
+                  )}
+                >
+                  {c.trustScore}
+                  <span className="font-normal opacity-75">{c.riskTier}</span>
+                </span>
+              </TableCell>
+              <TableCell className="text-right">
+                <span
+                  className={cn(
+                    "font-semibold text-sm",
+                    c.creditBalance > 0 ? "text-red-600" : "text-green-600"
+                  )}
+                >
+                  {formatINR(c.creditBalance)}
+                </span>
+              </TableCell>
+              <TableCell className="text-right hidden sm:table-cell text-sm text-muted-foreground">
+                {formatINR(c.creditLimit)}
+              </TableCell>
+              <TableCell className="hidden md:table-cell text-xs text-muted-foreground">
+                {c.lastSale
+                  ? `${formatDate(c.lastSale.date)} — ${formatINR(c.lastSale.amount)}`
+                  : "—"}
+              </TableCell>
+              <TableCell className="text-right hidden sm:table-cell text-sm text-muted-foreground">
+                {c.totalSales}
+              </TableCell>
+              <TableCell>
+                {c.creditBalance > 0 && (
+                  <div className="flex items-center gap-1">
+                    {/* WhatsApp reminder */}
+                    {c.phone ? (
+                      <a
+                        href={buildWhatsAppUrl(c.phone, c.name, c.creditBalance)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="h-7 text-xs text-green-600 border-green-200 hover:bg-green-50 hover:text-green-700"
+                        >
+                          <MessageCircle className="w-3 h-3" />
+                        </Button>
+                      </a>
+                    ) : (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="h-7 text-xs opacity-40"
+                        disabled
+                        title="No phone number"
+                      >
+                        <MessageCircle className="w-3 h-3" />
+                      </Button>
+                    )}
+
+                    {/* Pay dialog */}
                     <Dialog>
                       <DialogTrigger asChild>
                         <Button
@@ -155,9 +206,7 @@ export function KhataTable({ customers }: { customers: KhataCustomer[] }) {
                       </DialogTrigger>
                       <DialogContent className="max-w-sm">
                         <DialogHeader>
-                          <DialogTitle>
-                            Record Payment — {c.name}
-                          </DialogTitle>
+                          <DialogTitle>Record Payment — {c.name}</DialogTitle>
                         </DialogHeader>
                         <div className="space-y-3 py-2">
                           <div className="flex justify-between text-sm">
@@ -211,11 +260,11 @@ export function KhataTable({ customers }: { customers: KhataCustomer[] }) {
                         </DialogFooter>
                       </DialogContent>
                     </Dialog>
-                  )}
-                </TableCell>
-              </TableRow>
-            );
-          })}
+                  </div>
+                )}
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </div>
