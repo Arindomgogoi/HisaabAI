@@ -101,5 +101,22 @@ export type ProductFormValues = z.infer<typeof productSchema>;
 export type StockTransferFormValues = z.infer<typeof stockTransferSchema>;
 export type CreateSaleFormValues = z.infer<typeof createSaleSchema>;
 export type CustomerFormValues = z.infer<typeof customerSchema>;
+export const expenseSchema = z.object({
+  date: z.string().min(1, "Date is required"),
+  category: z.enum([
+    "Rent",
+    "Salary",
+    "Electricity",
+    "Transport",
+    "Maintenance",
+    "Miscellaneous",
+  ]),
+  description: z.string().min(1, "Description is required"),
+  amount: z.coerce.number().positive("Amount must be greater than 0"),
+  paymentMode: z.enum(["cash", "upi", "bank"]).default("cash"),
+});
+
+export type ExpenseFormValues = z.infer<typeof expenseSchema>;
+
 export type LoginFormValues = z.infer<typeof loginSchema>;
 export type RegisterFormValues = z.infer<typeof registerSchema>;
