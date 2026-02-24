@@ -2,6 +2,7 @@ import { PrismaClient, ProductCategory, SizeUnit, PaymentMode } from "../src/gen
 import { PrismaPg } from "@prisma/adapter-pg";
 import pg from "pg";
 import bcrypt from "bcryptjs";
+import { subDays } from "date-fns";
 
 const pool = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -586,8 +587,8 @@ async function main() {
     createdCustomers.push(created.id);
   }
 
-  // ── Generate 30 days of sales history ──
-  console.log("Generating 30 days of sales history...");
+  // ── Generate 90 days of sales history ──
+  console.log("Generating 90 days of sales history...");
   const now = new Date();
   let totalSales = 0;
 
@@ -599,7 +600,7 @@ async function main() {
   );
   const allSaleableProducts = createdProducts.filter((p) => p.shopBottles > 0);
 
-  for (let daysAgo = 30; daysAgo >= 0; daysAgo--) {
+  for (let daysAgo = 90; daysAgo >= 0; daysAgo--) {
     const saleDate = new Date(now);
     saleDate.setDate(saleDate.getDate() - daysAgo);
     saleDate.setHours(10, 0, 0, 0);
@@ -691,7 +692,71 @@ async function main() {
     }
   }
 
-  console.log(`  Created ${totalSales} sales across 30 days`);
+  console.log(`  Created ${totalSales} sales across 90 days`);
+
+  // ── Generate purchase records (approx weekly for 90 days) ──
+  console.log("Generating purchase records...");
+  const createdSupplierRecords = await prisma.supplier.findMany({ where: { shopId: shop.id } });
+  const supplierIds = createdSupplierRecords.map((s) => s.id);
+
+  // Pick a few high-volume products to use in purchase line items
+  const purchaseProducts = createdProducts.filter(
+    (p) => ["ML_750", "BOTTLE_650"].includes(p.size) &&
+           ["WHISKY", "BEER", "RUM"].includes(p.category)
+  ).slice(0, 15);
+
+  let purchaseCount = 0;
+  for (let i = 0; i < 13; i++) {
+    const daysAgo = i * 7; // weekly purchases from today back 90 days
+    if (daysAgo > 90) break;
+    const purchaseDate = subDays(now, daysAgo);
+
+    // Pick 3-5 products for this purchase
+    const itemCount = randomInt(3, 5);
+    const usedIds = new Set<string>();
+    const purchaseItems: Array<{ productId: string; cases: number; costPerCase: number; totalCost: number }> = [];
+
+    for (let j = 0; j < itemCount; j++) {
+      let prod = randomChoice(purchaseProducts);
+      let attempts = 0;
+      while (usedIds.has(prod.id) && attempts < 10) { prod = randomChoice(purchaseProducts); attempts++; }
+      if (usedIds.has(prod.id)) continue;
+      usedIds.add(prod.id);
+
+      const cases = randomInt(2, 8);
+      const costPerCase = Math.round(prod.costPrice * 12); // costPrice per bottle × 12 bpc
+      const totalCost = costPerCase * cases;
+      purchaseItems.push({ productId: prod.id, cases, costPerCase, totalCost });
+    }
+
+    if (purchaseItems.length === 0) continue;
+
+    const totalAmount = purchaseItems.reduce((s, item) => s + item.totalCost, 0);
+    const isPaid = daysAgo > 14; // older purchases are paid
+    const dateStr = purchaseDate.toISOString().slice(0, 10).replace(/-/g, "");
+
+    await prisma.purchase.create({
+      data: {
+        invoiceNumber: `PUR-${dateStr}-${String(i + 1).padStart(3, "0")}`,
+        purchaseDate,
+        supplierId: randomChoice(supplierIds),
+        shopId: shop.id,
+        totalAmount,
+        paymentStatus: isPaid ? "paid" : "pending",
+        items: {
+          create: purchaseItems.map((item) => ({
+            productId: item.productId,
+            cases: item.cases,
+            costPerCase: item.costPerCase,
+            totalCost: item.totalCost,
+          })),
+        },
+      },
+    });
+    purchaseCount++;
+  }
+  console.log(`  Created ${purchaseCount} purchase records`);
+
   console.log("\nSeed completed successfully!");
   console.log("Login: admin@hisaab.ai / password123");
 }

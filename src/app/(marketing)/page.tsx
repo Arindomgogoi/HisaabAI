@@ -241,9 +241,10 @@ export default function LandingPage() {
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </Link>
-              <Link href="#how-it-works">
+              <Link href="/login">
                 <Button variant="outline" size="lg" className="px-8 text-base">
-                  See How It Works
+                  <Sparkles className="w-4 h-4 mr-2 text-amber-500" />
+                  Try Demo
                 </Button>
               </Link>
             </div>

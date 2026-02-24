@@ -17,6 +17,28 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  async function loginAsDemo() {
+    setLoading(true);
+    try {
+      const result = await signIn("credentials", {
+        email: "admin@hisaab.ai",
+        password: "password123",
+        redirect: false,
+      });
+      if (result?.ok) {
+        toast.success("Welcome to the demo!");
+        router.push("/dashboard");
+        router.refresh();
+      } else {
+        toast.error("Demo login failed. Please try again.");
+        setLoading(false);
+      }
+    } catch {
+      toast.error("Something went wrong");
+      setLoading(false);
+    }
+  }
+
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
@@ -83,8 +105,34 @@ export default function LoginPage() {
               Sign In
             </Button>
           </form>
-          <div className="mt-4 text-center text-sm text-muted-foreground">
-            Demo: admin@hisaab.ai / password123
+          <div className="mt-4">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">or</span>
+              </div>
+            </div>
+          </div>
+          <div className="mt-4">
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full"
+              onClick={loginAsDemo}
+              disabled={loading}
+            >
+              {loading ? (
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              ) : (
+                <Sparkles className="w-4 h-4 mr-2 text-amber-500" />
+              )}
+              Try Demo — No Sign Up Needed
+            </Button>
+            <p className="text-xs text-center text-muted-foreground mt-2">
+              Explore with sample liquor shop data
+            </p>
           </div>
           <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{" "}
