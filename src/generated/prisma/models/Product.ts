@@ -33,6 +33,7 @@ export type ProductAvgAggregateOutputType = {
   warehouseCases: number | null
   warehouseBottles: number | null
   shopBottles: number | null
+  gstRate: number | null
   reorderLevel: number | null
 }
 
@@ -43,6 +44,7 @@ export type ProductSumAggregateOutputType = {
   warehouseCases: number | null
   warehouseBottles: number | null
   shopBottles: number | null
+  gstRate: number | null
   reorderLevel: number | null
 }
 
@@ -59,6 +61,7 @@ export type ProductMinAggregateOutputType = {
   warehouseCases: number | null
   warehouseBottles: number | null
   shopBottles: number | null
+  gstRate: number | null
   reorderLevel: number | null
   isActive: boolean | null
   shopId: string | null
@@ -79,6 +82,7 @@ export type ProductMaxAggregateOutputType = {
   warehouseCases: number | null
   warehouseBottles: number | null
   shopBottles: number | null
+  gstRate: number | null
   reorderLevel: number | null
   isActive: boolean | null
   shopId: string | null
@@ -99,6 +103,7 @@ export type ProductCountAggregateOutputType = {
   warehouseCases: number
   warehouseBottles: number
   shopBottles: number
+  gstRate: number
   reorderLevel: number
   isActive: number
   shopId: number
@@ -115,6 +120,7 @@ export type ProductAvgAggregateInputType = {
   warehouseCases?: true
   warehouseBottles?: true
   shopBottles?: true
+  gstRate?: true
   reorderLevel?: true
 }
 
@@ -125,6 +131,7 @@ export type ProductSumAggregateInputType = {
   warehouseCases?: true
   warehouseBottles?: true
   shopBottles?: true
+  gstRate?: true
   reorderLevel?: true
 }
 
@@ -141,6 +148,7 @@ export type ProductMinAggregateInputType = {
   warehouseCases?: true
   warehouseBottles?: true
   shopBottles?: true
+  gstRate?: true
   reorderLevel?: true
   isActive?: true
   shopId?: true
@@ -161,6 +169,7 @@ export type ProductMaxAggregateInputType = {
   warehouseCases?: true
   warehouseBottles?: true
   shopBottles?: true
+  gstRate?: true
   reorderLevel?: true
   isActive?: true
   shopId?: true
@@ -181,6 +190,7 @@ export type ProductCountAggregateInputType = {
   warehouseCases?: true
   warehouseBottles?: true
   shopBottles?: true
+  gstRate?: true
   reorderLevel?: true
   isActive?: true
   shopId?: true
@@ -288,6 +298,7 @@ export type ProductGroupByOutputType = {
   warehouseCases: number
   warehouseBottles: number
   shopBottles: number
+  gstRate: number
   reorderLevel: number
   isActive: boolean
   shopId: string
@@ -331,6 +342,7 @@ export type ProductWhereInput = {
   warehouseCases?: Prisma.IntFilter<"Product"> | number
   warehouseBottles?: Prisma.IntFilter<"Product"> | number
   shopBottles?: Prisma.IntFilter<"Product"> | number
+  gstRate?: Prisma.FloatFilter<"Product"> | number
   reorderLevel?: Prisma.IntFilter<"Product"> | number
   isActive?: Prisma.BoolFilter<"Product"> | boolean
   shopId?: Prisma.StringFilter<"Product"> | string
@@ -340,6 +352,7 @@ export type ProductWhereInput = {
   saleItems?: Prisma.SaleItemListRelationFilter
   purchaseItems?: Prisma.PurchaseItemListRelationFilter
   stockTransfers?: Prisma.StockTransferListRelationFilter
+  stockCountLogs?: Prisma.StockCountLogListRelationFilter
 }
 
 export type ProductOrderByWithRelationInput = {
@@ -355,6 +368,7 @@ export type ProductOrderByWithRelationInput = {
   warehouseCases?: Prisma.SortOrder
   warehouseBottles?: Prisma.SortOrder
   shopBottles?: Prisma.SortOrder
+  gstRate?: Prisma.SortOrder
   reorderLevel?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   shopId?: Prisma.SortOrder
@@ -364,6 +378,7 @@ export type ProductOrderByWithRelationInput = {
   saleItems?: Prisma.SaleItemOrderByRelationAggregateInput
   purchaseItems?: Prisma.PurchaseItemOrderByRelationAggregateInput
   stockTransfers?: Prisma.StockTransferOrderByRelationAggregateInput
+  stockCountLogs?: Prisma.StockCountLogOrderByRelationAggregateInput
 }
 
 export type ProductWhereUniqueInput = Prisma.AtLeast<{
@@ -383,6 +398,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   warehouseCases?: Prisma.IntFilter<"Product"> | number
   warehouseBottles?: Prisma.IntFilter<"Product"> | number
   shopBottles?: Prisma.IntFilter<"Product"> | number
+  gstRate?: Prisma.FloatFilter<"Product"> | number
   reorderLevel?: Prisma.IntFilter<"Product"> | number
   isActive?: Prisma.BoolFilter<"Product"> | boolean
   shopId?: Prisma.StringFilter<"Product"> | string
@@ -392,6 +408,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   saleItems?: Prisma.SaleItemListRelationFilter
   purchaseItems?: Prisma.PurchaseItemListRelationFilter
   stockTransfers?: Prisma.StockTransferListRelationFilter
+  stockCountLogs?: Prisma.StockCountLogListRelationFilter
 }, "id" | "shopId_name_size">
 
 export type ProductOrderByWithAggregationInput = {
@@ -407,6 +424,7 @@ export type ProductOrderByWithAggregationInput = {
   warehouseCases?: Prisma.SortOrder
   warehouseBottles?: Prisma.SortOrder
   shopBottles?: Prisma.SortOrder
+  gstRate?: Prisma.SortOrder
   reorderLevel?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   shopId?: Prisma.SortOrder
@@ -435,6 +453,7 @@ export type ProductScalarWhereWithAggregatesInput = {
   warehouseCases?: Prisma.IntWithAggregatesFilter<"Product"> | number
   warehouseBottles?: Prisma.IntWithAggregatesFilter<"Product"> | number
   shopBottles?: Prisma.IntWithAggregatesFilter<"Product"> | number
+  gstRate?: Prisma.FloatWithAggregatesFilter<"Product"> | number
   reorderLevel?: Prisma.IntWithAggregatesFilter<"Product"> | number
   isActive?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
   shopId?: Prisma.StringWithAggregatesFilter<"Product"> | string
@@ -455,6 +474,7 @@ export type ProductCreateInput = {
   warehouseCases?: number
   warehouseBottles?: number
   shopBottles?: number
+  gstRate?: number
   reorderLevel?: number
   isActive?: boolean
   createdAt?: Date | string
@@ -463,6 +483,7 @@ export type ProductCreateInput = {
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutProductInput
   purchaseItems?: Prisma.PurchaseItemCreateNestedManyWithoutProductInput
   stockTransfers?: Prisma.StockTransferCreateNestedManyWithoutProductInput
+  stockCountLogs?: Prisma.StockCountLogCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateInput = {
@@ -478,6 +499,7 @@ export type ProductUncheckedCreateInput = {
   warehouseCases?: number
   warehouseBottles?: number
   shopBottles?: number
+  gstRate?: number
   reorderLevel?: number
   isActive?: boolean
   shopId: string
@@ -486,6 +508,7 @@ export type ProductUncheckedCreateInput = {
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
   purchaseItems?: Prisma.PurchaseItemUncheckedCreateNestedManyWithoutProductInput
   stockTransfers?: Prisma.StockTransferUncheckedCreateNestedManyWithoutProductInput
+  stockCountLogs?: Prisma.StockCountLogUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductUpdateInput = {
@@ -501,6 +524,7 @@ export type ProductUpdateInput = {
   warehouseCases?: Prisma.IntFieldUpdateOperationsInput | number
   warehouseBottles?: Prisma.IntFieldUpdateOperationsInput | number
   shopBottles?: Prisma.IntFieldUpdateOperationsInput | number
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -509,6 +533,7 @@ export type ProductUpdateInput = {
   saleItems?: Prisma.SaleItemUpdateManyWithoutProductNestedInput
   purchaseItems?: Prisma.PurchaseItemUpdateManyWithoutProductNestedInput
   stockTransfers?: Prisma.StockTransferUpdateManyWithoutProductNestedInput
+  stockCountLogs?: Prisma.StockCountLogUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateInput = {
@@ -524,6 +549,7 @@ export type ProductUncheckedUpdateInput = {
   warehouseCases?: Prisma.IntFieldUpdateOperationsInput | number
   warehouseBottles?: Prisma.IntFieldUpdateOperationsInput | number
   shopBottles?: Prisma.IntFieldUpdateOperationsInput | number
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   shopId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -532,6 +558,7 @@ export type ProductUncheckedUpdateInput = {
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
   purchaseItems?: Prisma.PurchaseItemUncheckedUpdateManyWithoutProductNestedInput
   stockTransfers?: Prisma.StockTransferUncheckedUpdateManyWithoutProductNestedInput
+  stockCountLogs?: Prisma.StockCountLogUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateManyInput = {
@@ -547,6 +574,7 @@ export type ProductCreateManyInput = {
   warehouseCases?: number
   warehouseBottles?: number
   shopBottles?: number
+  gstRate?: number
   reorderLevel?: number
   isActive?: boolean
   shopId: string
@@ -567,6 +595,7 @@ export type ProductUpdateManyMutationInput = {
   warehouseCases?: Prisma.IntFieldUpdateOperationsInput | number
   warehouseBottles?: Prisma.IntFieldUpdateOperationsInput | number
   shopBottles?: Prisma.IntFieldUpdateOperationsInput | number
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -586,6 +615,7 @@ export type ProductUncheckedUpdateManyInput = {
   warehouseCases?: Prisma.IntFieldUpdateOperationsInput | number
   warehouseBottles?: Prisma.IntFieldUpdateOperationsInput | number
   shopBottles?: Prisma.IntFieldUpdateOperationsInput | number
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   shopId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -622,6 +652,7 @@ export type ProductCountOrderByAggregateInput = {
   warehouseCases?: Prisma.SortOrder
   warehouseBottles?: Prisma.SortOrder
   shopBottles?: Prisma.SortOrder
+  gstRate?: Prisma.SortOrder
   reorderLevel?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   shopId?: Prisma.SortOrder
@@ -636,6 +667,7 @@ export type ProductAvgOrderByAggregateInput = {
   warehouseCases?: Prisma.SortOrder
   warehouseBottles?: Prisma.SortOrder
   shopBottles?: Prisma.SortOrder
+  gstRate?: Prisma.SortOrder
   reorderLevel?: Prisma.SortOrder
 }
 
@@ -652,6 +684,7 @@ export type ProductMaxOrderByAggregateInput = {
   warehouseCases?: Prisma.SortOrder
   warehouseBottles?: Prisma.SortOrder
   shopBottles?: Prisma.SortOrder
+  gstRate?: Prisma.SortOrder
   reorderLevel?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   shopId?: Prisma.SortOrder
@@ -672,6 +705,7 @@ export type ProductMinOrderByAggregateInput = {
   warehouseCases?: Prisma.SortOrder
   warehouseBottles?: Prisma.SortOrder
   shopBottles?: Prisma.SortOrder
+  gstRate?: Prisma.SortOrder
   reorderLevel?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   shopId?: Prisma.SortOrder
@@ -686,6 +720,7 @@ export type ProductSumOrderByAggregateInput = {
   warehouseCases?: Prisma.SortOrder
   warehouseBottles?: Prisma.SortOrder
   shopBottles?: Prisma.SortOrder
+  gstRate?: Prisma.SortOrder
   reorderLevel?: Prisma.SortOrder
 }
 
@@ -760,6 +795,14 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type FloatFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
@@ -806,6 +849,20 @@ export type ProductUpdateOneRequiredWithoutStockTransfersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutStockTransfersInput, Prisma.ProductUpdateWithoutStockTransfersInput>, Prisma.ProductUncheckedUpdateWithoutStockTransfersInput>
 }
 
+export type ProductCreateNestedOneWithoutStockCountLogsInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutStockCountLogsInput, Prisma.ProductUncheckedCreateWithoutStockCountLogsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutStockCountLogsInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutStockCountLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutStockCountLogsInput, Prisma.ProductUncheckedCreateWithoutStockCountLogsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutStockCountLogsInput
+  upsert?: Prisma.ProductUpsertWithoutStockCountLogsInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutStockCountLogsInput, Prisma.ProductUpdateWithoutStockCountLogsInput>, Prisma.ProductUncheckedUpdateWithoutStockCountLogsInput>
+}
+
 export type ProductCreateWithoutShopInput = {
   id?: string
   name: string
@@ -819,6 +876,7 @@ export type ProductCreateWithoutShopInput = {
   warehouseCases?: number
   warehouseBottles?: number
   shopBottles?: number
+  gstRate?: number
   reorderLevel?: number
   isActive?: boolean
   createdAt?: Date | string
@@ -826,6 +884,7 @@ export type ProductCreateWithoutShopInput = {
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutProductInput
   purchaseItems?: Prisma.PurchaseItemCreateNestedManyWithoutProductInput
   stockTransfers?: Prisma.StockTransferCreateNestedManyWithoutProductInput
+  stockCountLogs?: Prisma.StockCountLogCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutShopInput = {
@@ -841,6 +900,7 @@ export type ProductUncheckedCreateWithoutShopInput = {
   warehouseCases?: number
   warehouseBottles?: number
   shopBottles?: number
+  gstRate?: number
   reorderLevel?: number
   isActive?: boolean
   createdAt?: Date | string
@@ -848,6 +908,7 @@ export type ProductUncheckedCreateWithoutShopInput = {
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
   purchaseItems?: Prisma.PurchaseItemUncheckedCreateNestedManyWithoutProductInput
   stockTransfers?: Prisma.StockTransferUncheckedCreateNestedManyWithoutProductInput
+  stockCountLogs?: Prisma.StockCountLogUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutShopInput = {
@@ -892,6 +953,7 @@ export type ProductScalarWhereInput = {
   warehouseCases?: Prisma.IntFilter<"Product"> | number
   warehouseBottles?: Prisma.IntFilter<"Product"> | number
   shopBottles?: Prisma.IntFilter<"Product"> | number
+  gstRate?: Prisma.FloatFilter<"Product"> | number
   reorderLevel?: Prisma.IntFilter<"Product"> | number
   isActive?: Prisma.BoolFilter<"Product"> | boolean
   shopId?: Prisma.StringFilter<"Product"> | string
@@ -912,6 +974,7 @@ export type ProductCreateWithoutSaleItemsInput = {
   warehouseCases?: number
   warehouseBottles?: number
   shopBottles?: number
+  gstRate?: number
   reorderLevel?: number
   isActive?: boolean
   createdAt?: Date | string
@@ -919,6 +982,7 @@ export type ProductCreateWithoutSaleItemsInput = {
   shop: Prisma.ShopCreateNestedOneWithoutProductsInput
   purchaseItems?: Prisma.PurchaseItemCreateNestedManyWithoutProductInput
   stockTransfers?: Prisma.StockTransferCreateNestedManyWithoutProductInput
+  stockCountLogs?: Prisma.StockCountLogCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutSaleItemsInput = {
@@ -934,6 +998,7 @@ export type ProductUncheckedCreateWithoutSaleItemsInput = {
   warehouseCases?: number
   warehouseBottles?: number
   shopBottles?: number
+  gstRate?: number
   reorderLevel?: number
   isActive?: boolean
   shopId: string
@@ -941,6 +1006,7 @@ export type ProductUncheckedCreateWithoutSaleItemsInput = {
   updatedAt?: Date | string
   purchaseItems?: Prisma.PurchaseItemUncheckedCreateNestedManyWithoutProductInput
   stockTransfers?: Prisma.StockTransferUncheckedCreateNestedManyWithoutProductInput
+  stockCountLogs?: Prisma.StockCountLogUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutSaleItemsInput = {
@@ -972,6 +1038,7 @@ export type ProductUpdateWithoutSaleItemsInput = {
   warehouseCases?: Prisma.IntFieldUpdateOperationsInput | number
   warehouseBottles?: Prisma.IntFieldUpdateOperationsInput | number
   shopBottles?: Prisma.IntFieldUpdateOperationsInput | number
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -979,6 +1046,7 @@ export type ProductUpdateWithoutSaleItemsInput = {
   shop?: Prisma.ShopUpdateOneRequiredWithoutProductsNestedInput
   purchaseItems?: Prisma.PurchaseItemUpdateManyWithoutProductNestedInput
   stockTransfers?: Prisma.StockTransferUpdateManyWithoutProductNestedInput
+  stockCountLogs?: Prisma.StockCountLogUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutSaleItemsInput = {
@@ -994,6 +1062,7 @@ export type ProductUncheckedUpdateWithoutSaleItemsInput = {
   warehouseCases?: Prisma.IntFieldUpdateOperationsInput | number
   warehouseBottles?: Prisma.IntFieldUpdateOperationsInput | number
   shopBottles?: Prisma.IntFieldUpdateOperationsInput | number
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   shopId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1001,6 +1070,7 @@ export type ProductUncheckedUpdateWithoutSaleItemsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   purchaseItems?: Prisma.PurchaseItemUncheckedUpdateManyWithoutProductNestedInput
   stockTransfers?: Prisma.StockTransferUncheckedUpdateManyWithoutProductNestedInput
+  stockCountLogs?: Prisma.StockCountLogUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutPurchaseItemsInput = {
@@ -1016,6 +1086,7 @@ export type ProductCreateWithoutPurchaseItemsInput = {
   warehouseCases?: number
   warehouseBottles?: number
   shopBottles?: number
+  gstRate?: number
   reorderLevel?: number
   isActive?: boolean
   createdAt?: Date | string
@@ -1023,6 +1094,7 @@ export type ProductCreateWithoutPurchaseItemsInput = {
   shop: Prisma.ShopCreateNestedOneWithoutProductsInput
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutProductInput
   stockTransfers?: Prisma.StockTransferCreateNestedManyWithoutProductInput
+  stockCountLogs?: Prisma.StockCountLogCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutPurchaseItemsInput = {
@@ -1038,6 +1110,7 @@ export type ProductUncheckedCreateWithoutPurchaseItemsInput = {
   warehouseCases?: number
   warehouseBottles?: number
   shopBottles?: number
+  gstRate?: number
   reorderLevel?: number
   isActive?: boolean
   shopId: string
@@ -1045,6 +1118,7 @@ export type ProductUncheckedCreateWithoutPurchaseItemsInput = {
   updatedAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
   stockTransfers?: Prisma.StockTransferUncheckedCreateNestedManyWithoutProductInput
+  stockCountLogs?: Prisma.StockCountLogUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutPurchaseItemsInput = {
@@ -1076,6 +1150,7 @@ export type ProductUpdateWithoutPurchaseItemsInput = {
   warehouseCases?: Prisma.IntFieldUpdateOperationsInput | number
   warehouseBottles?: Prisma.IntFieldUpdateOperationsInput | number
   shopBottles?: Prisma.IntFieldUpdateOperationsInput | number
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1083,6 +1158,7 @@ export type ProductUpdateWithoutPurchaseItemsInput = {
   shop?: Prisma.ShopUpdateOneRequiredWithoutProductsNestedInput
   saleItems?: Prisma.SaleItemUpdateManyWithoutProductNestedInput
   stockTransfers?: Prisma.StockTransferUpdateManyWithoutProductNestedInput
+  stockCountLogs?: Prisma.StockCountLogUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutPurchaseItemsInput = {
@@ -1098,6 +1174,7 @@ export type ProductUncheckedUpdateWithoutPurchaseItemsInput = {
   warehouseCases?: Prisma.IntFieldUpdateOperationsInput | number
   warehouseBottles?: Prisma.IntFieldUpdateOperationsInput | number
   shopBottles?: Prisma.IntFieldUpdateOperationsInput | number
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   shopId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1105,6 +1182,7 @@ export type ProductUncheckedUpdateWithoutPurchaseItemsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
   stockTransfers?: Prisma.StockTransferUncheckedUpdateManyWithoutProductNestedInput
+  stockCountLogs?: Prisma.StockCountLogUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutStockTransfersInput = {
@@ -1120,6 +1198,7 @@ export type ProductCreateWithoutStockTransfersInput = {
   warehouseCases?: number
   warehouseBottles?: number
   shopBottles?: number
+  gstRate?: number
   reorderLevel?: number
   isActive?: boolean
   createdAt?: Date | string
@@ -1127,6 +1206,7 @@ export type ProductCreateWithoutStockTransfersInput = {
   shop: Prisma.ShopCreateNestedOneWithoutProductsInput
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutProductInput
   purchaseItems?: Prisma.PurchaseItemCreateNestedManyWithoutProductInput
+  stockCountLogs?: Prisma.StockCountLogCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutStockTransfersInput = {
@@ -1142,6 +1222,7 @@ export type ProductUncheckedCreateWithoutStockTransfersInput = {
   warehouseCases?: number
   warehouseBottles?: number
   shopBottles?: number
+  gstRate?: number
   reorderLevel?: number
   isActive?: boolean
   shopId: string
@@ -1149,6 +1230,7 @@ export type ProductUncheckedCreateWithoutStockTransfersInput = {
   updatedAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
   purchaseItems?: Prisma.PurchaseItemUncheckedCreateNestedManyWithoutProductInput
+  stockCountLogs?: Prisma.StockCountLogUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutStockTransfersInput = {
@@ -1180,6 +1262,7 @@ export type ProductUpdateWithoutStockTransfersInput = {
   warehouseCases?: Prisma.IntFieldUpdateOperationsInput | number
   warehouseBottles?: Prisma.IntFieldUpdateOperationsInput | number
   shopBottles?: Prisma.IntFieldUpdateOperationsInput | number
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1187,6 +1270,7 @@ export type ProductUpdateWithoutStockTransfersInput = {
   shop?: Prisma.ShopUpdateOneRequiredWithoutProductsNestedInput
   saleItems?: Prisma.SaleItemUpdateManyWithoutProductNestedInput
   purchaseItems?: Prisma.PurchaseItemUpdateManyWithoutProductNestedInput
+  stockCountLogs?: Prisma.StockCountLogUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutStockTransfersInput = {
@@ -1202,6 +1286,7 @@ export type ProductUncheckedUpdateWithoutStockTransfersInput = {
   warehouseCases?: Prisma.IntFieldUpdateOperationsInput | number
   warehouseBottles?: Prisma.IntFieldUpdateOperationsInput | number
   shopBottles?: Prisma.IntFieldUpdateOperationsInput | number
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   shopId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1209,6 +1294,119 @@ export type ProductUncheckedUpdateWithoutStockTransfersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
   purchaseItems?: Prisma.PurchaseItemUncheckedUpdateManyWithoutProductNestedInput
+  stockCountLogs?: Prisma.StockCountLogUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductCreateWithoutStockCountLogsInput = {
+  id?: string
+  name: string
+  brand: string
+  category: $Enums.ProductCategory
+  size: $Enums.SizeUnit
+  hsnCode?: string
+  mrp: runtime.Decimal | runtime.DecimalJsLike | number | string
+  costPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bpc: number
+  warehouseCases?: number
+  warehouseBottles?: number
+  shopBottles?: number
+  gstRate?: number
+  reorderLevel?: number
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  shop: Prisma.ShopCreateNestedOneWithoutProductsInput
+  saleItems?: Prisma.SaleItemCreateNestedManyWithoutProductInput
+  purchaseItems?: Prisma.PurchaseItemCreateNestedManyWithoutProductInput
+  stockTransfers?: Prisma.StockTransferCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutStockCountLogsInput = {
+  id?: string
+  name: string
+  brand: string
+  category: $Enums.ProductCategory
+  size: $Enums.SizeUnit
+  hsnCode?: string
+  mrp: runtime.Decimal | runtime.DecimalJsLike | number | string
+  costPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bpc: number
+  warehouseCases?: number
+  warehouseBottles?: number
+  shopBottles?: number
+  gstRate?: number
+  reorderLevel?: number
+  isActive?: boolean
+  shopId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
+  purchaseItems?: Prisma.PurchaseItemUncheckedCreateNestedManyWithoutProductInput
+  stockTransfers?: Prisma.StockTransferUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutStockCountLogsInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutStockCountLogsInput, Prisma.ProductUncheckedCreateWithoutStockCountLogsInput>
+}
+
+export type ProductUpsertWithoutStockCountLogsInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutStockCountLogsInput, Prisma.ProductUncheckedUpdateWithoutStockCountLogsInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutStockCountLogsInput, Prisma.ProductUncheckedCreateWithoutStockCountLogsInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutStockCountLogsInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutStockCountLogsInput, Prisma.ProductUncheckedUpdateWithoutStockCountLogsInput>
+}
+
+export type ProductUpdateWithoutStockCountLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  brand?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.EnumProductCategoryFieldUpdateOperationsInput | $Enums.ProductCategory
+  size?: Prisma.EnumSizeUnitFieldUpdateOperationsInput | $Enums.SizeUnit
+  hsnCode?: Prisma.StringFieldUpdateOperationsInput | string
+  mrp?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bpc?: Prisma.IntFieldUpdateOperationsInput | number
+  warehouseCases?: Prisma.IntFieldUpdateOperationsInput | number
+  warehouseBottles?: Prisma.IntFieldUpdateOperationsInput | number
+  shopBottles?: Prisma.IntFieldUpdateOperationsInput | number
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
+  reorderLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  shop?: Prisma.ShopUpdateOneRequiredWithoutProductsNestedInput
+  saleItems?: Prisma.SaleItemUpdateManyWithoutProductNestedInput
+  purchaseItems?: Prisma.PurchaseItemUpdateManyWithoutProductNestedInput
+  stockTransfers?: Prisma.StockTransferUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutStockCountLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  brand?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.EnumProductCategoryFieldUpdateOperationsInput | $Enums.ProductCategory
+  size?: Prisma.EnumSizeUnitFieldUpdateOperationsInput | $Enums.SizeUnit
+  hsnCode?: Prisma.StringFieldUpdateOperationsInput | string
+  mrp?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bpc?: Prisma.IntFieldUpdateOperationsInput | number
+  warehouseCases?: Prisma.IntFieldUpdateOperationsInput | number
+  warehouseBottles?: Prisma.IntFieldUpdateOperationsInput | number
+  shopBottles?: Prisma.IntFieldUpdateOperationsInput | number
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
+  reorderLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  shopId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
+  purchaseItems?: Prisma.PurchaseItemUncheckedUpdateManyWithoutProductNestedInput
+  stockTransfers?: Prisma.StockTransferUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateManyShopInput = {
@@ -1224,6 +1422,7 @@ export type ProductCreateManyShopInput = {
   warehouseCases?: number
   warehouseBottles?: number
   shopBottles?: number
+  gstRate?: number
   reorderLevel?: number
   isActive?: boolean
   createdAt?: Date | string
@@ -1243,6 +1442,7 @@ export type ProductUpdateWithoutShopInput = {
   warehouseCases?: Prisma.IntFieldUpdateOperationsInput | number
   warehouseBottles?: Prisma.IntFieldUpdateOperationsInput | number
   shopBottles?: Prisma.IntFieldUpdateOperationsInput | number
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1250,6 +1450,7 @@ export type ProductUpdateWithoutShopInput = {
   saleItems?: Prisma.SaleItemUpdateManyWithoutProductNestedInput
   purchaseItems?: Prisma.PurchaseItemUpdateManyWithoutProductNestedInput
   stockTransfers?: Prisma.StockTransferUpdateManyWithoutProductNestedInput
+  stockCountLogs?: Prisma.StockCountLogUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutShopInput = {
@@ -1265,6 +1466,7 @@ export type ProductUncheckedUpdateWithoutShopInput = {
   warehouseCases?: Prisma.IntFieldUpdateOperationsInput | number
   warehouseBottles?: Prisma.IntFieldUpdateOperationsInput | number
   shopBottles?: Prisma.IntFieldUpdateOperationsInput | number
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1272,6 +1474,7 @@ export type ProductUncheckedUpdateWithoutShopInput = {
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
   purchaseItems?: Prisma.PurchaseItemUncheckedUpdateManyWithoutProductNestedInput
   stockTransfers?: Prisma.StockTransferUncheckedUpdateManyWithoutProductNestedInput
+  stockCountLogs?: Prisma.StockCountLogUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateManyWithoutShopInput = {
@@ -1287,6 +1490,7 @@ export type ProductUncheckedUpdateManyWithoutShopInput = {
   warehouseCases?: Prisma.IntFieldUpdateOperationsInput | number
   warehouseBottles?: Prisma.IntFieldUpdateOperationsInput | number
   shopBottles?: Prisma.IntFieldUpdateOperationsInput | number
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
   reorderLevel?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1302,12 +1506,14 @@ export type ProductCountOutputType = {
   saleItems: number
   purchaseItems: number
   stockTransfers: number
+  stockCountLogs: number
 }
 
 export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   saleItems?: boolean | ProductCountOutputTypeCountSaleItemsArgs
   purchaseItems?: boolean | ProductCountOutputTypeCountPurchaseItemsArgs
   stockTransfers?: boolean | ProductCountOutputTypeCountStockTransfersArgs
+  stockCountLogs?: boolean | ProductCountOutputTypeCountStockCountLogsArgs
 }
 
 /**
@@ -1341,6 +1547,13 @@ export type ProductCountOutputTypeCountStockTransfersArgs<ExtArgs extends runtim
   where?: Prisma.StockTransferWhereInput
 }
 
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountStockCountLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StockCountLogWhereInput
+}
+
 
 export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1355,6 +1568,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   warehouseCases?: boolean
   warehouseBottles?: boolean
   shopBottles?: boolean
+  gstRate?: boolean
   reorderLevel?: boolean
   isActive?: boolean
   shopId?: boolean
@@ -1364,6 +1578,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   saleItems?: boolean | Prisma.Product$saleItemsArgs<ExtArgs>
   purchaseItems?: boolean | Prisma.Product$purchaseItemsArgs<ExtArgs>
   stockTransfers?: boolean | Prisma.Product$stockTransfersArgs<ExtArgs>
+  stockCountLogs?: boolean | Prisma.Product$stockCountLogsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
@@ -1380,6 +1595,7 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   warehouseCases?: boolean
   warehouseBottles?: boolean
   shopBottles?: boolean
+  gstRate?: boolean
   reorderLevel?: boolean
   isActive?: boolean
   shopId?: boolean
@@ -1401,6 +1617,7 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   warehouseCases?: boolean
   warehouseBottles?: boolean
   shopBottles?: boolean
+  gstRate?: boolean
   reorderLevel?: boolean
   isActive?: boolean
   shopId?: boolean
@@ -1422,6 +1639,7 @@ export type ProductSelectScalar = {
   warehouseCases?: boolean
   warehouseBottles?: boolean
   shopBottles?: boolean
+  gstRate?: boolean
   reorderLevel?: boolean
   isActive?: boolean
   shopId?: boolean
@@ -1429,12 +1647,13 @@ export type ProductSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "brand" | "category" | "size" | "hsnCode" | "mrp" | "costPrice" | "bpc" | "warehouseCases" | "warehouseBottles" | "shopBottles" | "reorderLevel" | "isActive" | "shopId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "brand" | "category" | "size" | "hsnCode" | "mrp" | "costPrice" | "bpc" | "warehouseCases" | "warehouseBottles" | "shopBottles" | "gstRate" | "reorderLevel" | "isActive" | "shopId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   shop?: boolean | Prisma.ShopDefaultArgs<ExtArgs>
   saleItems?: boolean | Prisma.Product$saleItemsArgs<ExtArgs>
   purchaseItems?: boolean | Prisma.Product$purchaseItemsArgs<ExtArgs>
   stockTransfers?: boolean | Prisma.Product$stockTransfersArgs<ExtArgs>
+  stockCountLogs?: boolean | Prisma.Product$stockCountLogsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProductIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1451,6 +1670,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     saleItems: Prisma.$SaleItemPayload<ExtArgs>[]
     purchaseItems: Prisma.$PurchaseItemPayload<ExtArgs>[]
     stockTransfers: Prisma.$StockTransferPayload<ExtArgs>[]
+    stockCountLogs: Prisma.$StockCountLogPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1465,6 +1685,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     warehouseCases: number
     warehouseBottles: number
     shopBottles: number
+    gstRate: number
     reorderLevel: number
     isActive: boolean
     shopId: string
@@ -1868,6 +2089,7 @@ export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.
   saleItems<T extends Prisma.Product$saleItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$saleItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SaleItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   purchaseItems<T extends Prisma.Product$purchaseItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$purchaseItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   stockTransfers<T extends Prisma.Product$stockTransfersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$stockTransfersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockTransferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  stockCountLogs<T extends Prisma.Product$stockCountLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$stockCountLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockCountLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1909,6 +2131,7 @@ export interface ProductFieldRefs {
   readonly warehouseCases: Prisma.FieldRef<"Product", 'Int'>
   readonly warehouseBottles: Prisma.FieldRef<"Product", 'Int'>
   readonly shopBottles: Prisma.FieldRef<"Product", 'Int'>
+  readonly gstRate: Prisma.FieldRef<"Product", 'Float'>
   readonly reorderLevel: Prisma.FieldRef<"Product", 'Int'>
   readonly isActive: Prisma.FieldRef<"Product", 'Boolean'>
   readonly shopId: Prisma.FieldRef<"Product", 'String'>
@@ -2379,6 +2602,30 @@ export type Product$stockTransfersArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.StockTransferScalarFieldEnum | Prisma.StockTransferScalarFieldEnum[]
+}
+
+/**
+ * Product.stockCountLogs
+ */
+export type Product$stockCountLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StockCountLog
+   */
+  select?: Prisma.StockCountLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StockCountLog
+   */
+  omit?: Prisma.StockCountLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StockCountLogInclude<ExtArgs> | null
+  where?: Prisma.StockCountLogWhereInput
+  orderBy?: Prisma.StockCountLogOrderByWithRelationInput | Prisma.StockCountLogOrderByWithRelationInput[]
+  cursor?: Prisma.StockCountLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StockCountLogScalarFieldEnum | Prisma.StockCountLogScalarFieldEnum[]
 }
 
 /**

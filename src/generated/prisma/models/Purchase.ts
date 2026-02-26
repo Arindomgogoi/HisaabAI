@@ -28,10 +28,14 @@ export type AggregatePurchase = {
 
 export type PurchaseAvgAggregateOutputType = {
   totalAmount: runtime.Decimal | null
+  cgst: runtime.Decimal | null
+  sgst: runtime.Decimal | null
 }
 
 export type PurchaseSumAggregateOutputType = {
   totalAmount: runtime.Decimal | null
+  cgst: runtime.Decimal | null
+  sgst: runtime.Decimal | null
 }
 
 export type PurchaseMinAggregateOutputType = {
@@ -39,6 +43,8 @@ export type PurchaseMinAggregateOutputType = {
   invoiceNumber: string | null
   purchaseDate: Date | null
   totalAmount: runtime.Decimal | null
+  cgst: runtime.Decimal | null
+  sgst: runtime.Decimal | null
   paymentStatus: string | null
   supplierId: string | null
   shopId: string | null
@@ -51,6 +57,8 @@ export type PurchaseMaxAggregateOutputType = {
   invoiceNumber: string | null
   purchaseDate: Date | null
   totalAmount: runtime.Decimal | null
+  cgst: runtime.Decimal | null
+  sgst: runtime.Decimal | null
   paymentStatus: string | null
   supplierId: string | null
   shopId: string | null
@@ -63,6 +71,8 @@ export type PurchaseCountAggregateOutputType = {
   invoiceNumber: number
   purchaseDate: number
   totalAmount: number
+  cgst: number
+  sgst: number
   paymentStatus: number
   supplierId: number
   shopId: number
@@ -74,10 +84,14 @@ export type PurchaseCountAggregateOutputType = {
 
 export type PurchaseAvgAggregateInputType = {
   totalAmount?: true
+  cgst?: true
+  sgst?: true
 }
 
 export type PurchaseSumAggregateInputType = {
   totalAmount?: true
+  cgst?: true
+  sgst?: true
 }
 
 export type PurchaseMinAggregateInputType = {
@@ -85,6 +99,8 @@ export type PurchaseMinAggregateInputType = {
   invoiceNumber?: true
   purchaseDate?: true
   totalAmount?: true
+  cgst?: true
+  sgst?: true
   paymentStatus?: true
   supplierId?: true
   shopId?: true
@@ -97,6 +113,8 @@ export type PurchaseMaxAggregateInputType = {
   invoiceNumber?: true
   purchaseDate?: true
   totalAmount?: true
+  cgst?: true
+  sgst?: true
   paymentStatus?: true
   supplierId?: true
   shopId?: true
@@ -109,6 +127,8 @@ export type PurchaseCountAggregateInputType = {
   invoiceNumber?: true
   purchaseDate?: true
   totalAmount?: true
+  cgst?: true
+  sgst?: true
   paymentStatus?: true
   supplierId?: true
   shopId?: true
@@ -208,6 +228,8 @@ export type PurchaseGroupByOutputType = {
   invoiceNumber: string
   purchaseDate: Date
   totalAmount: runtime.Decimal
+  cgst: runtime.Decimal
+  sgst: runtime.Decimal
   paymentStatus: string
   supplierId: string
   shopId: string
@@ -243,6 +265,8 @@ export type PurchaseWhereInput = {
   invoiceNumber?: Prisma.StringFilter<"Purchase"> | string
   purchaseDate?: Prisma.DateTimeFilter<"Purchase"> | Date | string
   totalAmount?: Prisma.DecimalFilter<"Purchase"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: Prisma.DecimalFilter<"Purchase"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: Prisma.DecimalFilter<"Purchase"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: Prisma.StringFilter<"Purchase"> | string
   supplierId?: Prisma.StringFilter<"Purchase"> | string
   shopId?: Prisma.StringFilter<"Purchase"> | string
@@ -258,6 +282,8 @@ export type PurchaseOrderByWithRelationInput = {
   invoiceNumber?: Prisma.SortOrder
   purchaseDate?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
+  cgst?: Prisma.SortOrder
+  sgst?: Prisma.SortOrder
   paymentStatus?: Prisma.SortOrder
   supplierId?: Prisma.SortOrder
   shopId?: Prisma.SortOrder
@@ -276,6 +302,8 @@ export type PurchaseWhereUniqueInput = Prisma.AtLeast<{
   invoiceNumber?: Prisma.StringFilter<"Purchase"> | string
   purchaseDate?: Prisma.DateTimeFilter<"Purchase"> | Date | string
   totalAmount?: Prisma.DecimalFilter<"Purchase"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: Prisma.DecimalFilter<"Purchase"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: Prisma.DecimalFilter<"Purchase"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: Prisma.StringFilter<"Purchase"> | string
   supplierId?: Prisma.StringFilter<"Purchase"> | string
   shopId?: Prisma.StringFilter<"Purchase"> | string
@@ -291,6 +319,8 @@ export type PurchaseOrderByWithAggregationInput = {
   invoiceNumber?: Prisma.SortOrder
   purchaseDate?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
+  cgst?: Prisma.SortOrder
+  sgst?: Prisma.SortOrder
   paymentStatus?: Prisma.SortOrder
   supplierId?: Prisma.SortOrder
   shopId?: Prisma.SortOrder
@@ -311,6 +341,8 @@ export type PurchaseScalarWhereWithAggregatesInput = {
   invoiceNumber?: Prisma.StringWithAggregatesFilter<"Purchase"> | string
   purchaseDate?: Prisma.DateTimeWithAggregatesFilter<"Purchase"> | Date | string
   totalAmount?: Prisma.DecimalWithAggregatesFilter<"Purchase"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: Prisma.DecimalWithAggregatesFilter<"Purchase"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: Prisma.DecimalWithAggregatesFilter<"Purchase"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: Prisma.StringWithAggregatesFilter<"Purchase"> | string
   supplierId?: Prisma.StringWithAggregatesFilter<"Purchase"> | string
   shopId?: Prisma.StringWithAggregatesFilter<"Purchase"> | string
@@ -323,6 +355,8 @@ export type PurchaseCreateInput = {
   invoiceNumber: string
   purchaseDate?: Date | string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -336,6 +370,8 @@ export type PurchaseUncheckedCreateInput = {
   invoiceNumber: string
   purchaseDate?: Date | string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: string
   supplierId: string
   shopId: string
@@ -349,6 +385,8 @@ export type PurchaseUpdateInput = {
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -362,6 +400,8 @@ export type PurchaseUncheckedUpdateInput = {
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: Prisma.StringFieldUpdateOperationsInput | string
   supplierId?: Prisma.StringFieldUpdateOperationsInput | string
   shopId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -375,6 +415,8 @@ export type PurchaseCreateManyInput = {
   invoiceNumber: string
   purchaseDate?: Date | string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: string
   supplierId: string
   shopId: string
@@ -387,6 +429,8 @@ export type PurchaseUpdateManyMutationInput = {
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -397,6 +441,8 @@ export type PurchaseUncheckedUpdateManyInput = {
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: Prisma.StringFieldUpdateOperationsInput | string
   supplierId?: Prisma.StringFieldUpdateOperationsInput | string
   shopId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -419,6 +465,8 @@ export type PurchaseCountOrderByAggregateInput = {
   invoiceNumber?: Prisma.SortOrder
   purchaseDate?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
+  cgst?: Prisma.SortOrder
+  sgst?: Prisma.SortOrder
   paymentStatus?: Prisma.SortOrder
   supplierId?: Prisma.SortOrder
   shopId?: Prisma.SortOrder
@@ -428,6 +476,8 @@ export type PurchaseCountOrderByAggregateInput = {
 
 export type PurchaseAvgOrderByAggregateInput = {
   totalAmount?: Prisma.SortOrder
+  cgst?: Prisma.SortOrder
+  sgst?: Prisma.SortOrder
 }
 
 export type PurchaseMaxOrderByAggregateInput = {
@@ -435,6 +485,8 @@ export type PurchaseMaxOrderByAggregateInput = {
   invoiceNumber?: Prisma.SortOrder
   purchaseDate?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
+  cgst?: Prisma.SortOrder
+  sgst?: Prisma.SortOrder
   paymentStatus?: Prisma.SortOrder
   supplierId?: Prisma.SortOrder
   shopId?: Prisma.SortOrder
@@ -447,6 +499,8 @@ export type PurchaseMinOrderByAggregateInput = {
   invoiceNumber?: Prisma.SortOrder
   purchaseDate?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
+  cgst?: Prisma.SortOrder
+  sgst?: Prisma.SortOrder
   paymentStatus?: Prisma.SortOrder
   supplierId?: Prisma.SortOrder
   shopId?: Prisma.SortOrder
@@ -456,6 +510,8 @@ export type PurchaseMinOrderByAggregateInput = {
 
 export type PurchaseSumOrderByAggregateInput = {
   totalAmount?: Prisma.SortOrder
+  cgst?: Prisma.SortOrder
+  sgst?: Prisma.SortOrder
 }
 
 export type PurchaseScalarRelationFilter = {
@@ -566,6 +622,8 @@ export type PurchaseCreateWithoutShopInput = {
   invoiceNumber: string
   purchaseDate?: Date | string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -578,6 +636,8 @@ export type PurchaseUncheckedCreateWithoutShopInput = {
   invoiceNumber: string
   purchaseDate?: Date | string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: string
   supplierId: string
   createdAt?: Date | string
@@ -619,6 +679,8 @@ export type PurchaseScalarWhereInput = {
   invoiceNumber?: Prisma.StringFilter<"Purchase"> | string
   purchaseDate?: Prisma.DateTimeFilter<"Purchase"> | Date | string
   totalAmount?: Prisma.DecimalFilter<"Purchase"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: Prisma.DecimalFilter<"Purchase"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: Prisma.DecimalFilter<"Purchase"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: Prisma.StringFilter<"Purchase"> | string
   supplierId?: Prisma.StringFilter<"Purchase"> | string
   shopId?: Prisma.StringFilter<"Purchase"> | string
@@ -631,6 +693,8 @@ export type PurchaseCreateWithoutSupplierInput = {
   invoiceNumber: string
   purchaseDate?: Date | string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -643,6 +707,8 @@ export type PurchaseUncheckedCreateWithoutSupplierInput = {
   invoiceNumber: string
   purchaseDate?: Date | string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: string
   shopId: string
   createdAt?: Date | string
@@ -681,6 +747,8 @@ export type PurchaseCreateWithoutItemsInput = {
   invoiceNumber: string
   purchaseDate?: Date | string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -693,6 +761,8 @@ export type PurchaseUncheckedCreateWithoutItemsInput = {
   invoiceNumber: string
   purchaseDate?: Date | string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: string
   supplierId: string
   shopId: string
@@ -721,6 +791,8 @@ export type PurchaseUpdateWithoutItemsInput = {
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -733,6 +805,8 @@ export type PurchaseUncheckedUpdateWithoutItemsInput = {
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: Prisma.StringFieldUpdateOperationsInput | string
   supplierId?: Prisma.StringFieldUpdateOperationsInput | string
   shopId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -745,6 +819,8 @@ export type PurchaseCreateManyShopInput = {
   invoiceNumber: string
   purchaseDate?: Date | string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: string
   supplierId: string
   createdAt?: Date | string
@@ -756,6 +832,8 @@ export type PurchaseUpdateWithoutShopInput = {
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -768,6 +846,8 @@ export type PurchaseUncheckedUpdateWithoutShopInput = {
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: Prisma.StringFieldUpdateOperationsInput | string
   supplierId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -780,6 +860,8 @@ export type PurchaseUncheckedUpdateManyWithoutShopInput = {
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: Prisma.StringFieldUpdateOperationsInput | string
   supplierId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -791,6 +873,8 @@ export type PurchaseCreateManySupplierInput = {
   invoiceNumber: string
   purchaseDate?: Date | string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: string
   shopId: string
   createdAt?: Date | string
@@ -802,6 +886,8 @@ export type PurchaseUpdateWithoutSupplierInput = {
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -814,6 +900,8 @@ export type PurchaseUncheckedUpdateWithoutSupplierInput = {
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: Prisma.StringFieldUpdateOperationsInput | string
   shopId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -826,6 +914,8 @@ export type PurchaseUncheckedUpdateManyWithoutSupplierInput = {
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sgst?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentStatus?: Prisma.StringFieldUpdateOperationsInput | string
   shopId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -868,6 +958,8 @@ export type PurchaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   invoiceNumber?: boolean
   purchaseDate?: boolean
   totalAmount?: boolean
+  cgst?: boolean
+  sgst?: boolean
   paymentStatus?: boolean
   supplierId?: boolean
   shopId?: boolean
@@ -884,6 +976,8 @@ export type PurchaseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   invoiceNumber?: boolean
   purchaseDate?: boolean
   totalAmount?: boolean
+  cgst?: boolean
+  sgst?: boolean
   paymentStatus?: boolean
   supplierId?: boolean
   shopId?: boolean
@@ -898,6 +992,8 @@ export type PurchaseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   invoiceNumber?: boolean
   purchaseDate?: boolean
   totalAmount?: boolean
+  cgst?: boolean
+  sgst?: boolean
   paymentStatus?: boolean
   supplierId?: boolean
   shopId?: boolean
@@ -912,6 +1008,8 @@ export type PurchaseSelectScalar = {
   invoiceNumber?: boolean
   purchaseDate?: boolean
   totalAmount?: boolean
+  cgst?: boolean
+  sgst?: boolean
   paymentStatus?: boolean
   supplierId?: boolean
   shopId?: boolean
@@ -919,7 +1017,7 @@ export type PurchaseSelectScalar = {
   updatedAt?: boolean
 }
 
-export type PurchaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "invoiceNumber" | "purchaseDate" | "totalAmount" | "paymentStatus" | "supplierId" | "shopId" | "createdAt" | "updatedAt", ExtArgs["result"]["purchase"]>
+export type PurchaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "invoiceNumber" | "purchaseDate" | "totalAmount" | "cgst" | "sgst" | "paymentStatus" | "supplierId" | "shopId" | "createdAt" | "updatedAt", ExtArgs["result"]["purchase"]>
 export type PurchaseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   supplier?: boolean | Prisma.SupplierDefaultArgs<ExtArgs>
   shop?: boolean | Prisma.ShopDefaultArgs<ExtArgs>
@@ -947,6 +1045,8 @@ export type $PurchasePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     invoiceNumber: string
     purchaseDate: Date
     totalAmount: runtime.Decimal
+    cgst: runtime.Decimal
+    sgst: runtime.Decimal
     paymentStatus: string
     supplierId: string
     shopId: string
@@ -1382,6 +1482,8 @@ export interface PurchaseFieldRefs {
   readonly invoiceNumber: Prisma.FieldRef<"Purchase", 'String'>
   readonly purchaseDate: Prisma.FieldRef<"Purchase", 'DateTime'>
   readonly totalAmount: Prisma.FieldRef<"Purchase", 'Decimal'>
+  readonly cgst: Prisma.FieldRef<"Purchase", 'Decimal'>
+  readonly sgst: Prisma.FieldRef<"Purchase", 'Decimal'>
   readonly paymentStatus: Prisma.FieldRef<"Purchase", 'String'>
   readonly supplierId: Prisma.FieldRef<"Purchase", 'String'>
   readonly shopId: Prisma.FieldRef<"Purchase", 'String'>

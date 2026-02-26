@@ -396,7 +396,9 @@ export const ModelName = {
   Purchase: 'Purchase',
   PurchaseItem: 'PurchaseItem',
   Customer: 'Customer',
-  StockTransfer: 'StockTransfer'
+  StockTransfer: 'StockTransfer',
+  StockCountLog: 'StockCountLog',
+  Expense: 'Expense'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -412,7 +414,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "account" | "session" | "verificationToken" | "shop" | "product" | "sale" | "saleItem" | "supplier" | "purchase" | "purchaseItem" | "customer" | "stockTransfer"
+    modelProps: "user" | "account" | "session" | "verificationToken" | "shop" | "product" | "sale" | "saleItem" | "supplier" | "purchase" | "purchaseItem" | "customer" | "stockTransfer" | "stockCountLog" | "expense"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1378,6 +1380,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    StockCountLog: {
+      payload: Prisma.$StockCountLogPayload<ExtArgs>
+      fields: Prisma.StockCountLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StockCountLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StockCountLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StockCountLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StockCountLogPayload>
+        }
+        findFirst: {
+          args: Prisma.StockCountLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StockCountLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StockCountLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StockCountLogPayload>
+        }
+        findMany: {
+          args: Prisma.StockCountLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StockCountLogPayload>[]
+        }
+        create: {
+          args: Prisma.StockCountLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StockCountLogPayload>
+        }
+        createMany: {
+          args: Prisma.StockCountLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StockCountLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StockCountLogPayload>[]
+        }
+        delete: {
+          args: Prisma.StockCountLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StockCountLogPayload>
+        }
+        update: {
+          args: Prisma.StockCountLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StockCountLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.StockCountLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StockCountLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StockCountLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StockCountLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.StockCountLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StockCountLogPayload>
+        }
+        aggregate: {
+          args: Prisma.StockCountLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStockCountLog>
+        }
+        groupBy: {
+          args: Prisma.StockCountLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StockCountLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StockCountLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StockCountLogCountAggregateOutputType> | number
+        }
+      }
+    }
+    Expense: {
+      payload: Prisma.$ExpensePayload<ExtArgs>
+      fields: Prisma.ExpenseFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ExpenseFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpensePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ExpenseFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpensePayload>
+        }
+        findFirst: {
+          args: Prisma.ExpenseFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpensePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ExpenseFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpensePayload>
+        }
+        findMany: {
+          args: Prisma.ExpenseFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpensePayload>[]
+        }
+        create: {
+          args: Prisma.ExpenseCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpensePayload>
+        }
+        createMany: {
+          args: Prisma.ExpenseCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ExpenseCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpensePayload>[]
+        }
+        delete: {
+          args: Prisma.ExpenseDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpensePayload>
+        }
+        update: {
+          args: Prisma.ExpenseUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpensePayload>
+        }
+        deleteMany: {
+          args: Prisma.ExpenseDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ExpenseUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ExpenseUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpensePayload>[]
+        }
+        upsert: {
+          args: Prisma.ExpenseUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpensePayload>
+        }
+        aggregate: {
+          args: Prisma.ExpenseAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateExpense>
+        }
+        groupBy: {
+          args: Prisma.ExpenseGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExpenseGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ExpenseCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExpenseCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1500,6 +1650,7 @@ export const ProductScalarFieldEnum = {
   warehouseCases: 'warehouseCases',
   warehouseBottles: 'warehouseBottles',
   shopBottles: 'shopBottles',
+  gstRate: 'gstRate',
   reorderLevel: 'reorderLevel',
   isActive: 'isActive',
   shopId: 'shopId',
@@ -1517,6 +1668,8 @@ export const SaleScalarFieldEnum = {
   subtotal: 'subtotal',
   discount: 'discount',
   totalAmount: 'totalAmount',
+  cgst: 'cgst',
+  sgst: 'sgst',
   paymentMode: 'paymentMode',
   customerId: 'customerId',
   shopId: 'shopId',
@@ -1533,7 +1686,8 @@ export const SaleItemScalarFieldEnum = {
   productId: 'productId',
   quantity: 'quantity',
   unitPrice: 'unitPrice',
-  totalPrice: 'totalPrice'
+  totalPrice: 'totalPrice',
+  gstRate: 'gstRate'
 } as const
 
 export type SaleItemScalarFieldEnum = (typeof SaleItemScalarFieldEnum)[keyof typeof SaleItemScalarFieldEnum]
@@ -1560,6 +1714,8 @@ export const PurchaseScalarFieldEnum = {
   invoiceNumber: 'invoiceNumber',
   purchaseDate: 'purchaseDate',
   totalAmount: 'totalAmount',
+  cgst: 'cgst',
+  sgst: 'sgst',
   paymentStatus: 'paymentStatus',
   supplierId: 'supplierId',
   shopId: 'shopId',
@@ -1576,7 +1732,8 @@ export const PurchaseItemScalarFieldEnum = {
   productId: 'productId',
   cases: 'cases',
   costPerCase: 'costPerCase',
-  totalCost: 'totalCost'
+  totalCost: 'totalCost',
+  gstRate: 'gstRate'
 } as const
 
 export type PurchaseItemScalarFieldEnum = (typeof PurchaseItemScalarFieldEnum)[keyof typeof PurchaseItemScalarFieldEnum]
@@ -1609,6 +1766,40 @@ export const StockTransferScalarFieldEnum = {
 } as const
 
 export type StockTransferScalarFieldEnum = (typeof StockTransferScalarFieldEnum)[keyof typeof StockTransferScalarFieldEnum]
+
+
+export const StockCountLogScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  shopId: 'shopId',
+  countDate: 'countDate',
+  warehouseCases: 'warehouseCases',
+  shopBottles: 'shopBottles',
+  casesOpened: 'casesOpened',
+  bottlesFromCases: 'bottlesFromCases',
+  expectedBottles: 'expectedBottles',
+  autoSalesCount: 'autoSalesCount',
+  hasAnomaly: 'hasAnomaly',
+  notes: 'notes',
+  createdAt: 'createdAt'
+} as const
+
+export type StockCountLogScalarFieldEnum = (typeof StockCountLogScalarFieldEnum)[keyof typeof StockCountLogScalarFieldEnum]
+
+
+export const ExpenseScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  category: 'category',
+  description: 'description',
+  amount: 'amount',
+  paymentMode: 'paymentMode',
+  shopId: 'shopId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExpenseScalarFieldEnum = (typeof ExpenseScalarFieldEnum)[keyof typeof ExpenseScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1740,6 +1931,20 @@ export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMo
 
 
 /**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
@@ -1757,20 +1962,6 @@ export type EnumPaymentModeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
  * Reference to a field of type 'PaymentMode[]'
  */
 export type ListEnumPaymentModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMode[]'>
-    
-
-
-/**
- * Reference to a field of type 'Float'
- */
-export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-/**
- * Reference to a field of type 'Float[]'
- */
-export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 /**
@@ -1881,6 +2072,8 @@ export type GlobalOmitConfig = {
   purchaseItem?: Prisma.PurchaseItemOmit
   customer?: Prisma.CustomerOmit
   stockTransfer?: Prisma.StockTransferOmit
+  stockCountLog?: Prisma.StockCountLogOmit
+  expense?: Prisma.ExpenseOmit
 }
 
 /* Types for Logging */

@@ -83,10 +83,11 @@ model Shop {
   purchases      Purchase[]
   suppliers      Supplier[]
   customers      Customer[]
-  stockTransfers StockTransfer[]
-  expenses       Expense[]
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
+  stockTransfers  StockTransfer[]
+  expenses        Expense[]
+  stockCountLogs  StockCountLog[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 
   @@map("shops")
 }
@@ -136,6 +137,7 @@ model Product {
   saleItems        SaleItem[]
   purchaseItems    PurchaseItem[]
   stockTransfers   StockTransfer[]
+  stockCountLogs   StockCountLog[]
   createdAt        DateTime        @default(now())
   updatedAt        DateTime        @updatedAt
 
@@ -270,6 +272,28 @@ model StockTransfer {
 
   @@index([shopId, transferDate])
   @@map("stock_transfers")
+}
+
+model StockCountLog {
+  id               String   @id @default(cuid())
+  productId        String
+  product          Product  @relation(fields: [productId], references: [id])
+  shopId           String
+  shop             Shop     @relation(fields: [shopId], references: [id])
+  countDate        DateTime @default(now())
+  warehouseCases   Int
+  shopBottles      Int
+  casesOpened      Int      @default(0)
+  bottlesFromCases Int      @default(0)
+  expectedBottles  Int      @default(0)
+  autoSalesCount   Int      @default(0)
+  hasAnomaly       Boolean  @default(false)
+  notes            String?
+  createdAt        DateTime @default(now())
+
+  @@index([shopId, countDate])
+  @@index([productId, countDate])
+  @@map("stock_count_logs")
 }
 
 model Expense {

@@ -182,27 +182,112 @@ export async function receiveStock(
   }
 }
 
+export interface SmartBalanceSummary {
+  productId: string;
+  productName: string;
+  size: string;
+  prevCases: number | null;
+  currentCases: number;
+  prevBottles: number | null;
+  currentBottles: number;
+  casesOpened: number;
+  bottlesFromCases: number;
+  expectedBottles: number;
+  autoSalesCount: number;
+  hasAnomaly: boolean;
+}
+
 export async function stockCount(
-  entries: { productId: string; warehouseCases: number; shopBottles: number }[]
-) {
+  entries: { productId: string; warehouseCases: number; shopBottles: number; notes?: string }[]
+): Promise<{ success?: boolean; count?: number; summary?: SmartBalanceSummary[]; error?: string }> {
   const session = await auth();
   const shopId = (session?.user as Record<string, unknown>)?.shopId as string;
   if (!shopId) return { error: "Not authenticated" };
   if (!entries.length) return { error: "No entries provided" };
 
   try {
-    await prisma.$transaction(
-      entries.map((e) =>
-        prisma.product.update({
-          where: { id: e.productId, shopId },
-          data: { warehouseCases: e.warehouseCases, shopBottles: e.shopBottles },
+    // Fetch current product data (bpc + name + size) and previous count logs in parallel
+    const productIds = entries.map((e) => e.productId);
+    const [products, previousLogs] = await Promise.all([
+      prisma.product.findMany({
+        where: { id: { in: productIds }, shopId },
+        select: { id: true, name: true, size: true, bpc: true },
+      }),
+      prisma.stockCountLog.findMany({
+        where: { productId: { in: productIds }, shopId },
+        orderBy: { countDate: "desc" },
+        distinct: ["productId"],
+      }),
+    ]);
+
+    const productMap = new Map(products.map((p) => [p.id, p]));
+    const prevLogMap = new Map(previousLogs.map((l) => [l.productId, l]));
+
+    const summary: SmartBalanceSummary[] = [];
+    const logCreates = [];
+    const productUpdates = [];
+
+    for (const entry of entries) {
+      const product = productMap.get(entry.productId);
+      if (!product) continue;
+
+      const prevLog = prevLogMap.get(entry.productId);
+      const prevCases = prevLog?.warehouseCases ?? null;
+      const prevBottles = prevLog?.shopBottles ?? null;
+
+      // Smart Balance Calculation (same as n8n workflow logic)
+      const casesOpened = prevCases !== null ? Math.max(0, prevCases - entry.warehouseCases) : 0;
+      const bottlesFromCases = casesOpened * product.bpc;
+      const expectedBottles = prevBottles !== null ? prevBottles + bottlesFromCases : entry.shopBottles;
+      const autoSalesCount = prevBottles !== null ? Math.max(0, expectedBottles - entry.shopBottles) : 0;
+      const hasAnomaly = prevBottles !== null && entry.shopBottles > expectedBottles;
+
+      summary.push({
+        productId: entry.productId,
+        productName: product.name,
+        size: product.size,
+        prevCases,
+        currentCases: entry.warehouseCases,
+        prevBottles,
+        currentBottles: entry.shopBottles,
+        casesOpened,
+        bottlesFromCases,
+        expectedBottles,
+        autoSalesCount,
+        hasAnomaly,
+      });
+
+      logCreates.push(
+        prisma.stockCountLog.create({
+          data: {
+            productId: entry.productId,
+            shopId,
+            warehouseCases: entry.warehouseCases,
+            shopBottles: entry.shopBottles,
+            casesOpened,
+            bottlesFromCases,
+            expectedBottles,
+            autoSalesCount,
+            hasAnomaly,
+            notes: entry.notes,
+          },
         })
-      )
-    );
+      );
+
+      productUpdates.push(
+        prisma.product.update({
+          where: { id: entry.productId, shopId },
+          data: { warehouseCases: entry.warehouseCases, shopBottles: entry.shopBottles },
+        })
+      );
+    }
+
+    await prisma.$transaction([...productUpdates, ...logCreates]);
+
     revalidatePath("/inventory");
     revalidatePath("/inventory/count");
     revalidatePath("/dashboard");
-    return { success: true, count: entries.length };
+    return { success: true, count: entries.length, summary };
   } catch {
     return { error: "Failed to save stock count" };
   }

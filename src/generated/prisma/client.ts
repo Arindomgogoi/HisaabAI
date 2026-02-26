@@ -104,3 +104,13 @@ export type Customer = Prisma.CustomerModel
  * 
  */
 export type StockTransfer = Prisma.StockTransferModel
+/**
+ * Model StockCountLog
+ * 
+ */
+export type StockCountLog = Prisma.StockCountLogModel
+/**
+ * Model Expense
+ * 
+ */
+export type Expense = Prisma.ExpenseModel

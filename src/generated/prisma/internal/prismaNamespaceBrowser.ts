@@ -63,7 +63,9 @@ export const ModelName = {
   Purchase: 'Purchase',
   PurchaseItem: 'PurchaseItem',
   Customer: 'Customer',
-  StockTransfer: 'StockTransfer'
+  StockTransfer: 'StockTransfer',
+  StockCountLog: 'StockCountLog',
+  Expense: 'Expense'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -165,6 +167,7 @@ export const ProductScalarFieldEnum = {
   warehouseCases: 'warehouseCases',
   warehouseBottles: 'warehouseBottles',
   shopBottles: 'shopBottles',
+  gstRate: 'gstRate',
   reorderLevel: 'reorderLevel',
   isActive: 'isActive',
   shopId: 'shopId',
@@ -182,6 +185,8 @@ export const SaleScalarFieldEnum = {
   subtotal: 'subtotal',
   discount: 'discount',
   totalAmount: 'totalAmount',
+  cgst: 'cgst',
+  sgst: 'sgst',
   paymentMode: 'paymentMode',
   customerId: 'customerId',
   shopId: 'shopId',
@@ -198,7 +203,8 @@ export const SaleItemScalarFieldEnum = {
   productId: 'productId',
   quantity: 'quantity',
   unitPrice: 'unitPrice',
-  totalPrice: 'totalPrice'
+  totalPrice: 'totalPrice',
+  gstRate: 'gstRate'
 } as const
 
 export type SaleItemScalarFieldEnum = (typeof SaleItemScalarFieldEnum)[keyof typeof SaleItemScalarFieldEnum]
@@ -225,6 +231,8 @@ export const PurchaseScalarFieldEnum = {
   invoiceNumber: 'invoiceNumber',
   purchaseDate: 'purchaseDate',
   totalAmount: 'totalAmount',
+  cgst: 'cgst',
+  sgst: 'sgst',
   paymentStatus: 'paymentStatus',
   supplierId: 'supplierId',
   shopId: 'shopId',
@@ -241,7 +249,8 @@ export const PurchaseItemScalarFieldEnum = {
   productId: 'productId',
   cases: 'cases',
   costPerCase: 'costPerCase',
-  totalCost: 'totalCost'
+  totalCost: 'totalCost',
+  gstRate: 'gstRate'
 } as const
 
 export type PurchaseItemScalarFieldEnum = (typeof PurchaseItemScalarFieldEnum)[keyof typeof PurchaseItemScalarFieldEnum]
@@ -274,6 +283,40 @@ export const StockTransferScalarFieldEnum = {
 } as const
 
 export type StockTransferScalarFieldEnum = (typeof StockTransferScalarFieldEnum)[keyof typeof StockTransferScalarFieldEnum]
+
+
+export const StockCountLogScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  shopId: 'shopId',
+  countDate: 'countDate',
+  warehouseCases: 'warehouseCases',
+  shopBottles: 'shopBottles',
+  casesOpened: 'casesOpened',
+  bottlesFromCases: 'bottlesFromCases',
+  expectedBottles: 'expectedBottles',
+  autoSalesCount: 'autoSalesCount',
+  hasAnomaly: 'hasAnomaly',
+  notes: 'notes',
+  createdAt: 'createdAt'
+} as const
+
+export type StockCountLogScalarFieldEnum = (typeof StockCountLogScalarFieldEnum)[keyof typeof StockCountLogScalarFieldEnum]
+
+
+export const ExpenseScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  category: 'category',
+  description: 'description',
+  amount: 'amount',
+  paymentMode: 'paymentMode',
+  shopId: 'shopId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExpenseScalarFieldEnum = (typeof ExpenseScalarFieldEnum)[keyof typeof ExpenseScalarFieldEnum]
 
 
 export const SortOrder = {

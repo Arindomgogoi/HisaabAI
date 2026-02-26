@@ -30,12 +30,14 @@ export type PurchaseItemAvgAggregateOutputType = {
   cases: number | null
   costPerCase: runtime.Decimal | null
   totalCost: runtime.Decimal | null
+  gstRate: number | null
 }
 
 export type PurchaseItemSumAggregateOutputType = {
   cases: number | null
   costPerCase: runtime.Decimal | null
   totalCost: runtime.Decimal | null
+  gstRate: number | null
 }
 
 export type PurchaseItemMinAggregateOutputType = {
@@ -45,6 +47,7 @@ export type PurchaseItemMinAggregateOutputType = {
   cases: number | null
   costPerCase: runtime.Decimal | null
   totalCost: runtime.Decimal | null
+  gstRate: number | null
 }
 
 export type PurchaseItemMaxAggregateOutputType = {
@@ -54,6 +57,7 @@ export type PurchaseItemMaxAggregateOutputType = {
   cases: number | null
   costPerCase: runtime.Decimal | null
   totalCost: runtime.Decimal | null
+  gstRate: number | null
 }
 
 export type PurchaseItemCountAggregateOutputType = {
@@ -63,6 +67,7 @@ export type PurchaseItemCountAggregateOutputType = {
   cases: number
   costPerCase: number
   totalCost: number
+  gstRate: number
   _all: number
 }
 
@@ -71,12 +76,14 @@ export type PurchaseItemAvgAggregateInputType = {
   cases?: true
   costPerCase?: true
   totalCost?: true
+  gstRate?: true
 }
 
 export type PurchaseItemSumAggregateInputType = {
   cases?: true
   costPerCase?: true
   totalCost?: true
+  gstRate?: true
 }
 
 export type PurchaseItemMinAggregateInputType = {
@@ -86,6 +93,7 @@ export type PurchaseItemMinAggregateInputType = {
   cases?: true
   costPerCase?: true
   totalCost?: true
+  gstRate?: true
 }
 
 export type PurchaseItemMaxAggregateInputType = {
@@ -95,6 +103,7 @@ export type PurchaseItemMaxAggregateInputType = {
   cases?: true
   costPerCase?: true
   totalCost?: true
+  gstRate?: true
 }
 
 export type PurchaseItemCountAggregateInputType = {
@@ -104,6 +113,7 @@ export type PurchaseItemCountAggregateInputType = {
   cases?: true
   costPerCase?: true
   totalCost?: true
+  gstRate?: true
   _all?: true
 }
 
@@ -200,6 +210,7 @@ export type PurchaseItemGroupByOutputType = {
   cases: number
   costPerCase: runtime.Decimal
   totalCost: runtime.Decimal
+  gstRate: number
   _count: PurchaseItemCountAggregateOutputType | null
   _avg: PurchaseItemAvgAggregateOutputType | null
   _sum: PurchaseItemSumAggregateOutputType | null
@@ -232,6 +243,7 @@ export type PurchaseItemWhereInput = {
   cases?: Prisma.IntFilter<"PurchaseItem"> | number
   costPerCase?: Prisma.DecimalFilter<"PurchaseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFilter<"PurchaseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFilter<"PurchaseItem"> | number
   purchase?: Prisma.XOR<Prisma.PurchaseScalarRelationFilter, Prisma.PurchaseWhereInput>
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
 }
@@ -243,6 +255,7 @@ export type PurchaseItemOrderByWithRelationInput = {
   cases?: Prisma.SortOrder
   costPerCase?: Prisma.SortOrder
   totalCost?: Prisma.SortOrder
+  gstRate?: Prisma.SortOrder
   purchase?: Prisma.PurchaseOrderByWithRelationInput
   product?: Prisma.ProductOrderByWithRelationInput
 }
@@ -257,6 +270,7 @@ export type PurchaseItemWhereUniqueInput = Prisma.AtLeast<{
   cases?: Prisma.IntFilter<"PurchaseItem"> | number
   costPerCase?: Prisma.DecimalFilter<"PurchaseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFilter<"PurchaseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFilter<"PurchaseItem"> | number
   purchase?: Prisma.XOR<Prisma.PurchaseScalarRelationFilter, Prisma.PurchaseWhereInput>
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
 }, "id">
@@ -268,6 +282,7 @@ export type PurchaseItemOrderByWithAggregationInput = {
   cases?: Prisma.SortOrder
   costPerCase?: Prisma.SortOrder
   totalCost?: Prisma.SortOrder
+  gstRate?: Prisma.SortOrder
   _count?: Prisma.PurchaseItemCountOrderByAggregateInput
   _avg?: Prisma.PurchaseItemAvgOrderByAggregateInput
   _max?: Prisma.PurchaseItemMaxOrderByAggregateInput
@@ -285,6 +300,7 @@ export type PurchaseItemScalarWhereWithAggregatesInput = {
   cases?: Prisma.IntWithAggregatesFilter<"PurchaseItem"> | number
   costPerCase?: Prisma.DecimalWithAggregatesFilter<"PurchaseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalWithAggregatesFilter<"PurchaseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatWithAggregatesFilter<"PurchaseItem"> | number
 }
 
 export type PurchaseItemCreateInput = {
@@ -292,6 +308,7 @@ export type PurchaseItemCreateInput = {
   cases: number
   costPerCase: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost: runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: number
   purchase: Prisma.PurchaseCreateNestedOneWithoutItemsInput
   product: Prisma.ProductCreateNestedOneWithoutPurchaseItemsInput
 }
@@ -303,6 +320,7 @@ export type PurchaseItemUncheckedCreateInput = {
   cases: number
   costPerCase: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost: runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: number
 }
 
 export type PurchaseItemUpdateInput = {
@@ -310,6 +328,7 @@ export type PurchaseItemUpdateInput = {
   cases?: Prisma.IntFieldUpdateOperationsInput | number
   costPerCase?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
   purchase?: Prisma.PurchaseUpdateOneRequiredWithoutItemsNestedInput
   product?: Prisma.ProductUpdateOneRequiredWithoutPurchaseItemsNestedInput
 }
@@ -321,6 +340,7 @@ export type PurchaseItemUncheckedUpdateInput = {
   cases?: Prisma.IntFieldUpdateOperationsInput | number
   costPerCase?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type PurchaseItemCreateManyInput = {
@@ -330,6 +350,7 @@ export type PurchaseItemCreateManyInput = {
   cases: number
   costPerCase: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost: runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: number
 }
 
 export type PurchaseItemUpdateManyMutationInput = {
@@ -337,6 +358,7 @@ export type PurchaseItemUpdateManyMutationInput = {
   cases?: Prisma.IntFieldUpdateOperationsInput | number
   costPerCase?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type PurchaseItemUncheckedUpdateManyInput = {
@@ -346,6 +368,7 @@ export type PurchaseItemUncheckedUpdateManyInput = {
   cases?: Prisma.IntFieldUpdateOperationsInput | number
   costPerCase?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type PurchaseItemListRelationFilter = {
@@ -365,12 +388,14 @@ export type PurchaseItemCountOrderByAggregateInput = {
   cases?: Prisma.SortOrder
   costPerCase?: Prisma.SortOrder
   totalCost?: Prisma.SortOrder
+  gstRate?: Prisma.SortOrder
 }
 
 export type PurchaseItemAvgOrderByAggregateInput = {
   cases?: Prisma.SortOrder
   costPerCase?: Prisma.SortOrder
   totalCost?: Prisma.SortOrder
+  gstRate?: Prisma.SortOrder
 }
 
 export type PurchaseItemMaxOrderByAggregateInput = {
@@ -380,6 +405,7 @@ export type PurchaseItemMaxOrderByAggregateInput = {
   cases?: Prisma.SortOrder
   costPerCase?: Prisma.SortOrder
   totalCost?: Prisma.SortOrder
+  gstRate?: Prisma.SortOrder
 }
 
 export type PurchaseItemMinOrderByAggregateInput = {
@@ -389,12 +415,14 @@ export type PurchaseItemMinOrderByAggregateInput = {
   cases?: Prisma.SortOrder
   costPerCase?: Prisma.SortOrder
   totalCost?: Prisma.SortOrder
+  gstRate?: Prisma.SortOrder
 }
 
 export type PurchaseItemSumOrderByAggregateInput = {
   cases?: Prisma.SortOrder
   costPerCase?: Prisma.SortOrder
   totalCost?: Prisma.SortOrder
+  gstRate?: Prisma.SortOrder
 }
 
 export type PurchaseItemCreateNestedManyWithoutProductInput = {
@@ -486,6 +514,7 @@ export type PurchaseItemCreateWithoutProductInput = {
   cases: number
   costPerCase: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost: runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: number
   purchase: Prisma.PurchaseCreateNestedOneWithoutItemsInput
 }
 
@@ -495,6 +524,7 @@ export type PurchaseItemUncheckedCreateWithoutProductInput = {
   cases: number
   costPerCase: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost: runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: number
 }
 
 export type PurchaseItemCreateOrConnectWithoutProductInput = {
@@ -533,6 +563,7 @@ export type PurchaseItemScalarWhereInput = {
   cases?: Prisma.IntFilter<"PurchaseItem"> | number
   costPerCase?: Prisma.DecimalFilter<"PurchaseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFilter<"PurchaseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFilter<"PurchaseItem"> | number
 }
 
 export type PurchaseItemCreateWithoutPurchaseInput = {
@@ -540,6 +571,7 @@ export type PurchaseItemCreateWithoutPurchaseInput = {
   cases: number
   costPerCase: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost: runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: number
   product: Prisma.ProductCreateNestedOneWithoutPurchaseItemsInput
 }
 
@@ -549,6 +581,7 @@ export type PurchaseItemUncheckedCreateWithoutPurchaseInput = {
   cases: number
   costPerCase: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost: runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: number
 }
 
 export type PurchaseItemCreateOrConnectWithoutPurchaseInput = {
@@ -583,6 +616,7 @@ export type PurchaseItemCreateManyProductInput = {
   cases: number
   costPerCase: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost: runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: number
 }
 
 export type PurchaseItemUpdateWithoutProductInput = {
@@ -590,6 +624,7 @@ export type PurchaseItemUpdateWithoutProductInput = {
   cases?: Prisma.IntFieldUpdateOperationsInput | number
   costPerCase?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
   purchase?: Prisma.PurchaseUpdateOneRequiredWithoutItemsNestedInput
 }
 
@@ -599,6 +634,7 @@ export type PurchaseItemUncheckedUpdateWithoutProductInput = {
   cases?: Prisma.IntFieldUpdateOperationsInput | number
   costPerCase?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type PurchaseItemUncheckedUpdateManyWithoutProductInput = {
@@ -607,6 +643,7 @@ export type PurchaseItemUncheckedUpdateManyWithoutProductInput = {
   cases?: Prisma.IntFieldUpdateOperationsInput | number
   costPerCase?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type PurchaseItemCreateManyPurchaseInput = {
@@ -615,6 +652,7 @@ export type PurchaseItemCreateManyPurchaseInput = {
   cases: number
   costPerCase: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost: runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: number
 }
 
 export type PurchaseItemUpdateWithoutPurchaseInput = {
@@ -622,6 +660,7 @@ export type PurchaseItemUpdateWithoutPurchaseInput = {
   cases?: Prisma.IntFieldUpdateOperationsInput | number
   costPerCase?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
   product?: Prisma.ProductUpdateOneRequiredWithoutPurchaseItemsNestedInput
 }
 
@@ -631,6 +670,7 @@ export type PurchaseItemUncheckedUpdateWithoutPurchaseInput = {
   cases?: Prisma.IntFieldUpdateOperationsInput | number
   costPerCase?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type PurchaseItemUncheckedUpdateManyWithoutPurchaseInput = {
@@ -639,6 +679,7 @@ export type PurchaseItemUncheckedUpdateManyWithoutPurchaseInput = {
   cases?: Prisma.IntFieldUpdateOperationsInput | number
   costPerCase?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 
@@ -650,6 +691,7 @@ export type PurchaseItemSelect<ExtArgs extends runtime.Types.Extensions.Internal
   cases?: boolean
   costPerCase?: boolean
   totalCost?: boolean
+  gstRate?: boolean
   purchase?: boolean | Prisma.PurchaseDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["purchaseItem"]>
@@ -661,6 +703,7 @@ export type PurchaseItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   cases?: boolean
   costPerCase?: boolean
   totalCost?: boolean
+  gstRate?: boolean
   purchase?: boolean | Prisma.PurchaseDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["purchaseItem"]>
@@ -672,6 +715,7 @@ export type PurchaseItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   cases?: boolean
   costPerCase?: boolean
   totalCost?: boolean
+  gstRate?: boolean
   purchase?: boolean | Prisma.PurchaseDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["purchaseItem"]>
@@ -683,9 +727,10 @@ export type PurchaseItemSelectScalar = {
   cases?: boolean
   costPerCase?: boolean
   totalCost?: boolean
+  gstRate?: boolean
 }
 
-export type PurchaseItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "purchaseId" | "productId" | "cases" | "costPerCase" | "totalCost", ExtArgs["result"]["purchaseItem"]>
+export type PurchaseItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "purchaseId" | "productId" | "cases" | "costPerCase" | "totalCost" | "gstRate", ExtArgs["result"]["purchaseItem"]>
 export type PurchaseItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   purchase?: boolean | Prisma.PurchaseDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
@@ -712,6 +757,7 @@ export type $PurchaseItemPayload<ExtArgs extends runtime.Types.Extensions.Intern
     cases: number
     costPerCase: runtime.Decimal
     totalCost: runtime.Decimal
+    gstRate: number
   }, ExtArgs["result"]["purchaseItem"]>
   composites: {}
 }
@@ -1143,6 +1189,7 @@ export interface PurchaseItemFieldRefs {
   readonly cases: Prisma.FieldRef<"PurchaseItem", 'Int'>
   readonly costPerCase: Prisma.FieldRef<"PurchaseItem", 'Decimal'>
   readonly totalCost: Prisma.FieldRef<"PurchaseItem", 'Decimal'>
+  readonly gstRate: Prisma.FieldRef<"PurchaseItem", 'Float'>
 }
     
 

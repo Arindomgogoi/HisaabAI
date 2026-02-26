@@ -30,12 +30,14 @@ export type SaleItemAvgAggregateOutputType = {
   quantity: number | null
   unitPrice: runtime.Decimal | null
   totalPrice: runtime.Decimal | null
+  gstRate: number | null
 }
 
 export type SaleItemSumAggregateOutputType = {
   quantity: number | null
   unitPrice: runtime.Decimal | null
   totalPrice: runtime.Decimal | null
+  gstRate: number | null
 }
 
 export type SaleItemMinAggregateOutputType = {
@@ -45,6 +47,7 @@ export type SaleItemMinAggregateOutputType = {
   quantity: number | null
   unitPrice: runtime.Decimal | null
   totalPrice: runtime.Decimal | null
+  gstRate: number | null
 }
 
 export type SaleItemMaxAggregateOutputType = {
@@ -54,6 +57,7 @@ export type SaleItemMaxAggregateOutputType = {
   quantity: number | null
   unitPrice: runtime.Decimal | null
   totalPrice: runtime.Decimal | null
+  gstRate: number | null
 }
 
 export type SaleItemCountAggregateOutputType = {
@@ -63,6 +67,7 @@ export type SaleItemCountAggregateOutputType = {
   quantity: number
   unitPrice: number
   totalPrice: number
+  gstRate: number
   _all: number
 }
 
@@ -71,12 +76,14 @@ export type SaleItemAvgAggregateInputType = {
   quantity?: true
   unitPrice?: true
   totalPrice?: true
+  gstRate?: true
 }
 
 export type SaleItemSumAggregateInputType = {
   quantity?: true
   unitPrice?: true
   totalPrice?: true
+  gstRate?: true
 }
 
 export type SaleItemMinAggregateInputType = {
@@ -86,6 +93,7 @@ export type SaleItemMinAggregateInputType = {
   quantity?: true
   unitPrice?: true
   totalPrice?: true
+  gstRate?: true
 }
 
 export type SaleItemMaxAggregateInputType = {
@@ -95,6 +103,7 @@ export type SaleItemMaxAggregateInputType = {
   quantity?: true
   unitPrice?: true
   totalPrice?: true
+  gstRate?: true
 }
 
 export type SaleItemCountAggregateInputType = {
@@ -104,6 +113,7 @@ export type SaleItemCountAggregateInputType = {
   quantity?: true
   unitPrice?: true
   totalPrice?: true
+  gstRate?: true
   _all?: true
 }
 
@@ -200,6 +210,7 @@ export type SaleItemGroupByOutputType = {
   quantity: number
   unitPrice: runtime.Decimal
   totalPrice: runtime.Decimal
+  gstRate: number
   _count: SaleItemCountAggregateOutputType | null
   _avg: SaleItemAvgAggregateOutputType | null
   _sum: SaleItemSumAggregateOutputType | null
@@ -232,6 +243,7 @@ export type SaleItemWhereInput = {
   quantity?: Prisma.IntFilter<"SaleItem"> | number
   unitPrice?: Prisma.DecimalFilter<"SaleItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFilter<"SaleItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFilter<"SaleItem"> | number
   sale?: Prisma.XOR<Prisma.SaleScalarRelationFilter, Prisma.SaleWhereInput>
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
 }
@@ -243,6 +255,7 @@ export type SaleItemOrderByWithRelationInput = {
   quantity?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
+  gstRate?: Prisma.SortOrder
   sale?: Prisma.SaleOrderByWithRelationInput
   product?: Prisma.ProductOrderByWithRelationInput
 }
@@ -257,6 +270,7 @@ export type SaleItemWhereUniqueInput = Prisma.AtLeast<{
   quantity?: Prisma.IntFilter<"SaleItem"> | number
   unitPrice?: Prisma.DecimalFilter<"SaleItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFilter<"SaleItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFilter<"SaleItem"> | number
   sale?: Prisma.XOR<Prisma.SaleScalarRelationFilter, Prisma.SaleWhereInput>
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
 }, "id">
@@ -268,6 +282,7 @@ export type SaleItemOrderByWithAggregationInput = {
   quantity?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
+  gstRate?: Prisma.SortOrder
   _count?: Prisma.SaleItemCountOrderByAggregateInput
   _avg?: Prisma.SaleItemAvgOrderByAggregateInput
   _max?: Prisma.SaleItemMaxOrderByAggregateInput
@@ -285,6 +300,7 @@ export type SaleItemScalarWhereWithAggregatesInput = {
   quantity?: Prisma.IntWithAggregatesFilter<"SaleItem"> | number
   unitPrice?: Prisma.DecimalWithAggregatesFilter<"SaleItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalWithAggregatesFilter<"SaleItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatWithAggregatesFilter<"SaleItem"> | number
 }
 
 export type SaleItemCreateInput = {
@@ -292,6 +308,7 @@ export type SaleItemCreateInput = {
   quantity: number
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: number
   sale: Prisma.SaleCreateNestedOneWithoutItemsInput
   product: Prisma.ProductCreateNestedOneWithoutSaleItemsInput
 }
@@ -303,6 +320,7 @@ export type SaleItemUncheckedCreateInput = {
   quantity: number
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: number
 }
 
 export type SaleItemUpdateInput = {
@@ -310,6 +328,7 @@ export type SaleItemUpdateInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
   sale?: Prisma.SaleUpdateOneRequiredWithoutItemsNestedInput
   product?: Prisma.ProductUpdateOneRequiredWithoutSaleItemsNestedInput
 }
@@ -321,6 +340,7 @@ export type SaleItemUncheckedUpdateInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type SaleItemCreateManyInput = {
@@ -330,6 +350,7 @@ export type SaleItemCreateManyInput = {
   quantity: number
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: number
 }
 
 export type SaleItemUpdateManyMutationInput = {
@@ -337,6 +358,7 @@ export type SaleItemUpdateManyMutationInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type SaleItemUncheckedUpdateManyInput = {
@@ -346,6 +368,7 @@ export type SaleItemUncheckedUpdateManyInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type SaleItemListRelationFilter = {
@@ -365,12 +388,14 @@ export type SaleItemCountOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
+  gstRate?: Prisma.SortOrder
 }
 
 export type SaleItemAvgOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
+  gstRate?: Prisma.SortOrder
 }
 
 export type SaleItemMaxOrderByAggregateInput = {
@@ -380,6 +405,7 @@ export type SaleItemMaxOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
+  gstRate?: Prisma.SortOrder
 }
 
 export type SaleItemMinOrderByAggregateInput = {
@@ -389,12 +415,14 @@ export type SaleItemMinOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
+  gstRate?: Prisma.SortOrder
 }
 
 export type SaleItemSumOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
+  gstRate?: Prisma.SortOrder
 }
 
 export type SaleItemCreateNestedManyWithoutProductInput = {
@@ -486,6 +514,7 @@ export type SaleItemCreateWithoutProductInput = {
   quantity: number
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: number
   sale: Prisma.SaleCreateNestedOneWithoutItemsInput
 }
 
@@ -495,6 +524,7 @@ export type SaleItemUncheckedCreateWithoutProductInput = {
   quantity: number
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: number
 }
 
 export type SaleItemCreateOrConnectWithoutProductInput = {
@@ -533,6 +563,7 @@ export type SaleItemScalarWhereInput = {
   quantity?: Prisma.IntFilter<"SaleItem"> | number
   unitPrice?: Prisma.DecimalFilter<"SaleItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFilter<"SaleItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFilter<"SaleItem"> | number
 }
 
 export type SaleItemCreateWithoutSaleInput = {
@@ -540,6 +571,7 @@ export type SaleItemCreateWithoutSaleInput = {
   quantity: number
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: number
   product: Prisma.ProductCreateNestedOneWithoutSaleItemsInput
 }
 
@@ -549,6 +581,7 @@ export type SaleItemUncheckedCreateWithoutSaleInput = {
   quantity: number
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: number
 }
 
 export type SaleItemCreateOrConnectWithoutSaleInput = {
@@ -583,6 +616,7 @@ export type SaleItemCreateManyProductInput = {
   quantity: number
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: number
 }
 
 export type SaleItemUpdateWithoutProductInput = {
@@ -590,6 +624,7 @@ export type SaleItemUpdateWithoutProductInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
   sale?: Prisma.SaleUpdateOneRequiredWithoutItemsNestedInput
 }
 
@@ -599,6 +634,7 @@ export type SaleItemUncheckedUpdateWithoutProductInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type SaleItemUncheckedUpdateManyWithoutProductInput = {
@@ -607,6 +643,7 @@ export type SaleItemUncheckedUpdateManyWithoutProductInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type SaleItemCreateManySaleInput = {
@@ -615,6 +652,7 @@ export type SaleItemCreateManySaleInput = {
   quantity: number
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: number
 }
 
 export type SaleItemUpdateWithoutSaleInput = {
@@ -622,6 +660,7 @@ export type SaleItemUpdateWithoutSaleInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
   product?: Prisma.ProductUpdateOneRequiredWithoutSaleItemsNestedInput
 }
 
@@ -631,6 +670,7 @@ export type SaleItemUncheckedUpdateWithoutSaleInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type SaleItemUncheckedUpdateManyWithoutSaleInput = {
@@ -639,6 +679,7 @@ export type SaleItemUncheckedUpdateManyWithoutSaleInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  gstRate?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 
@@ -650,6 +691,7 @@ export type SaleItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   quantity?: boolean
   unitPrice?: boolean
   totalPrice?: boolean
+  gstRate?: boolean
   sale?: boolean | Prisma.SaleDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["saleItem"]>
@@ -661,6 +703,7 @@ export type SaleItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   quantity?: boolean
   unitPrice?: boolean
   totalPrice?: boolean
+  gstRate?: boolean
   sale?: boolean | Prisma.SaleDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["saleItem"]>
@@ -672,6 +715,7 @@ export type SaleItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   quantity?: boolean
   unitPrice?: boolean
   totalPrice?: boolean
+  gstRate?: boolean
   sale?: boolean | Prisma.SaleDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["saleItem"]>
@@ -683,9 +727,10 @@ export type SaleItemSelectScalar = {
   quantity?: boolean
   unitPrice?: boolean
   totalPrice?: boolean
+  gstRate?: boolean
 }
 
-export type SaleItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "saleId" | "productId" | "quantity" | "unitPrice" | "totalPrice", ExtArgs["result"]["saleItem"]>
+export type SaleItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "saleId" | "productId" | "quantity" | "unitPrice" | "totalPrice" | "gstRate", ExtArgs["result"]["saleItem"]>
 export type SaleItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sale?: boolean | Prisma.SaleDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
@@ -712,6 +757,7 @@ export type $SaleItemPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     quantity: number
     unitPrice: runtime.Decimal
     totalPrice: runtime.Decimal
+    gstRate: number
   }, ExtArgs["result"]["saleItem"]>
   composites: {}
 }
@@ -1143,6 +1189,7 @@ export interface SaleItemFieldRefs {
   readonly quantity: Prisma.FieldRef<"SaleItem", 'Int'>
   readonly unitPrice: Prisma.FieldRef<"SaleItem", 'Decimal'>
   readonly totalPrice: Prisma.FieldRef<"SaleItem", 'Decimal'>
+  readonly gstRate: Prisma.FieldRef<"SaleItem", 'Float'>
 }
     
 
