@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { format, subDays, startOfMonth } from "date-fns";
-import { BarChart3, TrendingUp, ShoppingBag, Banknote, Smartphone, CreditCard } from "lucide-react";
+import { BarChart3, TrendingUp, ShoppingBag, Banknote, Smartphone, CreditCard, Download } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -64,6 +64,44 @@ export function ReportsView({
     router.push(`/reports?from=${from}&to=${to}`);
   }
 
+  function downloadCSV() {
+    const lines: string[] = [];
+
+    lines.push("HisaabAI Sales Report");
+    lines.push(`Period,${fromDate} to ${toDate}`);
+    lines.push("");
+
+    lines.push("Summary");
+    lines.push(`Total Revenue,${summary.totalRevenue}`);
+    lines.push(`Transactions,${summary.transactions}`);
+    lines.push(`Avg Order Value,${summary.avgOrderValue}`);
+    lines.push(`Total Discount,${summary.totalDiscount}`);
+    lines.push("");
+
+    lines.push("Daily Breakdown");
+    lines.push("Date,Revenue,Transactions,Cash,UPI,Credit");
+    for (const row of dailyBreakdown) {
+      lines.push(
+        `${row.date},${row.revenue},${row.transactions},${row.cash},${row.upi},${row.credit}`
+      );
+    }
+    lines.push("");
+
+    lines.push("Top Products");
+    lines.push("Product,Qty Sold,Revenue");
+    for (const row of productReport) {
+      lines.push(`"${row.name}",${row.qty},${row.revenue}`);
+    }
+
+    const blob = new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `hisaab-report-${fromDate}-to-${toDate}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
   const presets = [
     { label: "Today", from: today, to: today },
     {
@@ -102,7 +140,15 @@ export function ReportsView({
             {format(new Date(toDate), "dd MMM yyyy")}
           </p>
         </div>
-        <BarChart3 className="w-6 h-6 text-muted-foreground hidden sm:block" />
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={downloadCSV}
+          className="gap-1.5"
+        >
+          <Download className="w-3.5 h-3.5" />
+          Export CSV
+        </Button>
       </div>
 
       {/* Date Range Picker */}

@@ -2,7 +2,6 @@
 
 import { useState, useMemo, useEffect, useRef } from "react";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import { SIZE_SHORT, CATEGORY_LABELS } from "@/lib/constants";
 import { formatINR } from "@/lib/formatters";
 import { Search, Plus } from "lucide-react";

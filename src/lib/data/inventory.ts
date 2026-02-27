@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import type { ProductCategory, SizeUnit } from "@/generated/prisma";
+import type { ProductCategory } from "@/generated/prisma";
 
 interface InventoryFilters {
   search?: string;
