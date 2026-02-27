@@ -2,8 +2,6 @@ import { auth } from "@/lib/auth";
 import { redirect, notFound } from "next/navigation";
 import { getProduct } from "@/lib/data/inventory";
 import { ProductForm } from "@/components/inventory/product-form";
-import { Button } from "@/components/ui/button";
-import { deleteProduct } from "@/app/(app)/inventory/actions";
 import { DeleteProductButton } from "@/components/inventory/delete-product-button";
 
 interface Props {

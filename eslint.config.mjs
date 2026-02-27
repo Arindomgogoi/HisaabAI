@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Build scripts use CommonJS require() — exclude from ESLint
+    "scripts/**",
   ]),
 ]);
 

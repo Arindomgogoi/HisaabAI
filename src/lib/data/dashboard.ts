@@ -120,16 +120,6 @@ export async function getSalesTrend(shopId: string, days: number = 7) {
 }
 
 export async function getLowStockProducts(shopId: string) {
-  const products = await prisma.product.findMany({
-    where: {
-      shopId,
-      isActive: true,
-      shopBottles: { lte: prisma.product.fields.reorderLevel },
-    },
-    orderBy: { shopBottles: "asc" },
-    take: 10,
-  });
-
   // Filter in memory since Prisma doesn't support column comparison in where
   const allProducts = await prisma.product.findMany({
     where: { shopId, isActive: true },

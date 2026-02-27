@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { formatINR } from "@/lib/formatters";
 import { SIZE_SHORT, CATEGORY_LABELS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil } from "lucide-react";
 import Link from "next/link";
 import type { ProductCategory, SizeUnit } from "@/generated/prisma";
 
