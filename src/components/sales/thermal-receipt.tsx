@@ -26,8 +26,6 @@ interface ReceiptData {
   subtotal: number;
   discount: number;
   totalAmount: number;
-  cgst: number;
-  sgst: number;
   paymentMode: PaymentMode;
   customer: { name: string; phone: string | null } | null;
   shop: {
@@ -139,12 +137,6 @@ export function ThermalReceipt({ sale }: { sale: ReceiptData }) {
 
         {/* Totals */}
         <div style={{ whiteSpace: "pre" }}>{padRow("Subtotal", formatINR(sale.subtotal))}</div>
-        {sale.cgst > 0 && (
-          <div style={{ whiteSpace: "pre", fontSize: 11 }}>{padRow("  CGST", formatINR(sale.cgst))}</div>
-        )}
-        {sale.sgst > 0 && (
-          <div style={{ whiteSpace: "pre", fontSize: 11 }}>{padRow("  SGST", formatINR(sale.sgst))}</div>
-        )}
         {sale.discount > 0 && (
           <div style={{ whiteSpace: "pre" }}>{padRow("Discount", `-${formatINR(sale.discount)}`)}</div>
         )}

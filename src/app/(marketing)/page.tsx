@@ -50,9 +50,9 @@ const features = [
   },
   {
     icon: FileText,
-    title: "GST & Tax Reports",
+    title: "Excise & Compliance Reports",
     description:
-      "Auto-calculate CGST, SGST, and IGST. GSTR-1 and GSTR-3B ready exports for easy filing.",
+      "Track monthly sales and purchases for State Excise compliance. Monthly business summaries for audit records.",
     badge: "Live",
   },
   {
@@ -94,7 +94,7 @@ const pricingPlans = [
       "1 Shop",
       "Unlimited Products",
       "AI Business Insights",
-      "GST Reports & Filing",
+      "Excise Compliance Reports",
       "Invoice OCR",
       "Multi-user Access",
       "Priority Support",
@@ -157,11 +157,11 @@ const faqs = [
   },
   {
     q: "Does it work for my type of shop?",
-    a: "HisaabAI is built specifically for regulated retail — liquor shops, wine & beer stores, and similar businesses that need multi-size inventory tracking and GST compliance. If you sell physical products with GST, it works for you.",
+    a: "HisaabAI is built specifically for regulated retail — liquor shops, wine & beer stores, and similar businesses that need multi-size inventory tracking and State Excise compliance. Perfect for shops governed by state excise departments.",
   },
   {
-    q: "How does GST filing work?",
-    a: "HisaabAI automatically calculates CGST and SGST on every sale based on each product's GST rate. The GST & Tax page gives you GSTR-1 and GSTR-3B ready summaries that you can export and file.",
+    q: "How does Excise compliance work?",
+    a: "Liquor in India is governed by State Excise Duty — not GST. HisaabAI tracks your monthly sales and purchases and generates a compliance summary you can use for excise audit records and annual returns.",
   },
   {
     q: "Is my data safe?",
@@ -229,7 +229,7 @@ export default function LandingPage() {
             </h1>
             <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
               Complete business management for Indian retail shops. Inventory,
-              billing, GST, and AI-powered insights — all in one place.
+              billing, excise compliance, and AI-powered insights — all in one place.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link href="/register">
@@ -270,7 +270,7 @@ export default function LandingPage() {
               <div className="flex">
                 {/* Mock sidebar */}
                 <div className="hidden md:flex flex-col gap-1 w-44 border-r p-3 bg-muted/10">
-                  {["Dashboard", "Inventory", "Sales & POS", "Purchases", "GST & Tax", "AI Insights", "Reports"].map((item, i) => (
+                  {["Dashboard", "Inventory", "Sales & POS", "Purchases", "Excise & Compliance", "AI Insights", "Reports"].map((item, i) => (
                     <div key={item} className={`flex items-center gap-2 px-2 py-1.5 rounded text-xs ${i === 0 ? "bg-primary text-primary-foreground font-medium" : "text-muted-foreground"}`}>
                       <span className="w-3 h-3 rounded-sm bg-current opacity-60" />
                       {item}
@@ -342,7 +342,7 @@ export default function LandingPage() {
           <div className="flex flex-wrap items-center justify-center gap-6 md:gap-12 text-sm font-medium text-muted-foreground">
             <div className="flex items-center gap-2">
               <Shield className="w-4 h-4 text-green-600" />
-              <span>GST Compliant</span>
+              <span>Excise Compliant</span>
             </div>
             <div className="flex items-center gap-2">
               <Smartphone className="w-4 h-4 text-blue-600" />
@@ -406,7 +406,7 @@ export default function LandingPage() {
               Everything Your Shop Needs
             </h2>
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-              From inventory to invoicing, GST to AI insights — manage your
+              From inventory to invoicing, excise compliance to AI insights — manage your
               entire business from one dashboard.
             </p>
           </div>
@@ -464,7 +464,7 @@ export default function LandingPage() {
               <tbody>
                 {[
                   ["AI business insights", true, false, false],
-                  ["GST auto-calculation & filing", true, false, true],
+                  ["Excise compliance reports", true, false, true],
                   ["Multi-size inventory (750ml/375ml/180ml)", true, false, false],
                   ["Invoice OCR (Telegram bot)", true, false, false],
                   ["Liquor retail compliance", true, false, false],
@@ -587,7 +587,7 @@ export default function LandingPage() {
           </h2>
           <p className="mt-4 text-lg opacity-80 max-w-xl mx-auto">
             Join Indian shopkeepers already using HisaabAI to track inventory,
-            file GST, and grow their business with AI.
+            stay excise compliant, and grow their business with AI.
           </p>
           <Link href="/register">
             <Button
@@ -631,7 +631,7 @@ export default function LandingPage() {
                 <li><Link href="/dashboard" className="hover:text-foreground transition-colors">Dashboard</Link></li>
                 <li><Link href="/inventory" className="hover:text-foreground transition-colors">Inventory</Link></li>
                 <li><Link href="/sales/pos" className="hover:text-foreground transition-colors">POS</Link></li>
-                <li><Link href="/gst" className="hover:text-foreground transition-colors">GST Reports</Link></li>
+                <li><Link href="/gst" className="hover:text-foreground transition-colors">Excise Reports</Link></li>
               </ul>
             </div>
             <div>

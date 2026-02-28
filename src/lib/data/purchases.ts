@@ -39,7 +39,6 @@ export async function getProductsForPurchase(shopId: string) {
       size: true,
       category: true,
       costPrice: true,
-      gstRate: true,
       bpc: true,
       warehouseCases: true,
     },

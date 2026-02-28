@@ -16,7 +16,6 @@ export const productSchema = z.object({
   mrp: z.coerce.number().positive("MRP must be positive"),
   costPrice: z.coerce.number().positive("Cost price must be positive"),
   bpc: z.coerce.number().int().positive("BPC must be positive"),
-  gstRate: z.coerce.number().min(0).max(28).default(18),
   reorderLevel: z.coerce.number().int().min(0).default(10),
 });
 

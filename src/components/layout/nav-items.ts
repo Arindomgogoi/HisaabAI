@@ -15,7 +15,7 @@ export const navItems = [
   { label: "Sales & POS", href: "/sales", icon: ShoppingCart },
   { label: "Purchases", href: "/purchases", icon: Truck },
   { label: "Expenses", href: "/expenses", icon: Receipt },
-  { label: "Tax & Compliance", href: "/gst", icon: FileText },
+  { label: "Excise & Compliance", href: "/gst", icon: FileText },
   { label: "AI Insights", href: "/insights", icon: Brain },
   { label: "Reports", href: "/reports", icon: BarChart3 },
 ] as const;

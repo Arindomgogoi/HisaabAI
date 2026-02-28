@@ -71,8 +71,6 @@ export async function getSaleDetail(id: string) {
     subtotal: Number(sale.subtotal),
     discount: Number(sale.discount),
     totalAmount: Number(sale.totalAmount),
-    cgst: Number(sale.cgst),
-    sgst: Number(sale.sgst),
     paymentMode: sale.paymentMode,
     customer: sale.customer,
     shop: sale.shop,

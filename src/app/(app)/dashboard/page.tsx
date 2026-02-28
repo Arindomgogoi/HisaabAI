@@ -83,7 +83,7 @@ export default async function DashboardPage() {
               </div>
               <p className="text-sm font-medium">Set up your shop</p>
               <p className="text-xs text-muted-foreground">
-                Add your GSTIN, address, and shop name for invoices.
+                Add your Excise License No., address, and shop name for invoices.
               </p>
               <Link href="/settings">
                 <Button size="sm" variant="outline" className="w-full mt-2">

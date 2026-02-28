@@ -30,7 +30,6 @@ export default async function GSTPage({
     <GSTReport
       complianceSummary={complianceSummary}
       monthlyBreakdown={monthlyBreakdown}
-      shopGstin={shop?.gstNumber ?? null}
       licenseNumber={shop?.licenseNumber ?? null}
       fromDate={from.toISOString().split("T")[0]}
       toDate={to.toISOString().split("T")[0]}

@@ -40,7 +40,6 @@ interface Props {
     purchases: number;
     grossProfit: number;
   }>;
-  shopGstin: string | null;
   licenseNumber: string | null;
   fromDate: string;
   toDate: string;
@@ -49,7 +48,6 @@ interface Props {
 export function GSTReport({
   complianceSummary,
   monthlyBreakdown,
-  shopGstin,
   licenseNumber,
   fromDate,
   toDate,
@@ -89,7 +87,7 @@ export function GSTReport({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-heading font-bold">Tax &amp; Compliance</h1>
+          <h1 className="text-2xl font-heading font-bold">Excise &amp; Compliance</h1>
           <p className="text-muted-foreground mt-1 text-sm">
             {format(new Date(fromDate), "dd MMM yyyy")} —{" "}
             {format(new Date(toDate), "dd MMM yyyy")}
@@ -99,11 +97,6 @@ export function GSTReport({
           {licenseNumber && (
             <Badge variant="outline" className="font-mono text-xs">
               License: {licenseNumber}
-            </Badge>
-          )}
-          {shopGstin && (
-            <Badge variant="outline" className="font-mono text-xs">
-              GSTIN: {shopGstin}
             </Badge>
           )}
         </div>
@@ -204,12 +197,12 @@ export function GSTReport({
         <Card>
           <CardContent className="pt-4 pb-3">
             <div className="flex items-center gap-2 mb-1">
-              <TrendingDown className="w-3.5 h-3.5 text-muted-foreground" />
-              <p className="text-xs text-muted-foreground">Excise Tax</p>
+              <TrendingDown className="w-3.5 h-3.5 text-violet-500" />
+              <p className="text-xs text-muted-foreground">Avg Margin</p>
             </div>
-            <p className="text-xl font-bold text-muted-foreground">N/A</p>
+            <p className="text-xl font-bold">{marginPct}%</p>
             <p className="text-xs text-muted-foreground mt-0.5">
-              Built into MRP by state
+              Sales − Purchases
             </p>
           </CardContent>
         </Card>

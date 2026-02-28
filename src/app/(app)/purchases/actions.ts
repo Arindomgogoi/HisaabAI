@@ -30,26 +30,6 @@ export async function createPurchase(data: {
   });
   if (!supplier) return { error: "Supplier not found" };
 
-  // Fetch gstRate for each product and calculate input tax
-  const productIds = items.map((i) => i.productId);
-  const products = await prisma.product.findMany({
-    where: { id: { in: productIds } },
-    select: { id: true, gstRate: true },
-  });
-  const gstRateMap = new Map(products.map((p) => [p.id, p.gstRate]));
-
-  let totalCgst = 0;
-  let totalSgst = 0;
-  const itemsWithGst = items.map((item) => {
-    const gstRate = gstRateMap.get(item.productId) ?? 18;
-    const taxAmount = item.cases * item.costPerCase * (gstRate / 100);
-    totalCgst += taxAmount / 2;
-    totalSgst += taxAmount / 2;
-    return { ...item, gstRate };
-  });
-  totalCgst = Math.round(totalCgst * 100) / 100;
-  totalSgst = Math.round(totalSgst * 100) / 100;
-
   // Calculate total
   const totalAmount = items.reduce(
     (sum, item) => sum + item.cases * item.costPerCase,
@@ -64,18 +44,18 @@ export async function createPurchase(data: {
           invoiceNumber,
           purchaseDate: new Date(purchaseDate),
           totalAmount,
-          cgst: totalCgst,
-          sgst: totalSgst,
+          cgst: 0,
+          sgst: 0,
           paymentStatus,
           supplierId,
           shopId,
           items: {
-            create: itemsWithGst.map((item) => ({
+            create: items.map((item) => ({
               productId: item.productId,
               cases: item.cases,
               costPerCase: item.costPerCase,
               totalCost: item.cases * item.costPerCase,
-              gstRate: item.gstRate,
+              gstRate: 0,
             })),
           },
         },

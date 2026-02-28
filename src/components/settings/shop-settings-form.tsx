@@ -18,7 +18,6 @@ interface Shop {
   city: string | null;
   state: string;
   licenseNumber: string | null;
-  gstNumber: string | null;
 }
 
 export function ShopSettingsForm({ shop }: { shop: Shop }) {
@@ -129,7 +128,7 @@ export function ShopSettingsForm({ shop }: { shop: Shop }) {
             Tax &amp; Legal
           </CardTitle>
           <CardDescription className="text-xs">
-            Required for GST compliance and liquor licensing
+            Required for excise compliance and liquor licensing
           </CardDescription>
         </CardHeader>
         <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -143,15 +142,6 @@ export function ShopSettingsForm({ shop }: { shop: Shop }) {
             />
           </div>
 
-          <div className="space-y-1.5">
-            <Label htmlFor="gstNumber">GST Number</Label>
-            <Input
-              id="gstNumber"
-              name="gstNumber"
-              defaultValue={shop.gstNumber ?? ""}
-              placeholder="e.g. 27AABCU9603R1ZX"
-            />
-          </div>
         </CardContent>
       </Card>
 

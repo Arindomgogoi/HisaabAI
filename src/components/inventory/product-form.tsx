@@ -29,7 +29,6 @@ interface ProductData {
   mrp: number;
   costPrice: number;
   bpc: number;
-  gstRate: number;
   reorderLevel: number;
 }
 
@@ -188,39 +187,19 @@ export function ProductForm({ product, mode }: ProductFormProps) {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label>GST Rate</Label>
-              <Select name="gstRate" defaultValue={String(product?.gstRate ?? 0)} required>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select GST rate" />
-                </SelectTrigger>
-                <SelectContent>
-                  {[0, 5, 12, 18, 28].map((rate) => (
-                    <SelectItem key={rate} value={String(rate)}>
-                      {rate}%
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <p className="text-xs text-muted-foreground">
-                Liquor is excise-governed — keep at 0%
-              </p>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="reorderLevel">Reorder Level (bottles)</Label>
-              <Input
-                id="reorderLevel"
-                name="reorderLevel"
-                type="number"
-                min="0"
-                defaultValue={product?.reorderLevel ?? 10}
-                placeholder="10"
-              />
-              <p className="text-xs text-muted-foreground">
-                Low stock alert when shop bottles fall below this
-              </p>
-            </div>
+          <div className="space-y-2 max-w-xs">
+            <Label htmlFor="reorderLevel">Reorder Level (bottles)</Label>
+            <Input
+              id="reorderLevel"
+              name="reorderLevel"
+              type="number"
+              min="0"
+              defaultValue={product?.reorderLevel ?? 10}
+              placeholder="10"
+            />
+            <p className="text-xs text-muted-foreground">
+              Low stock alert when shop bottles fall below this
+            </p>
           </div>
 
           <div className="flex gap-3 pt-2">
